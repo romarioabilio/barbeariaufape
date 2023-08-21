@@ -22,9 +22,11 @@ public class Produto {
         
     }
 
-    public Produto(String nome, double preco) {
+    public Produto(String nome, double preco,String produto,int quantidade) {
         this.nome = nome;
         this.preco = preco;
+        this.descricao=produto;
+        this.quantidade=quantidade;
     }
 
     // Getters e setters
