@@ -1,4 +1,4 @@
-package negocio.basica;
+package br.edu.ufape.poo.barbeariaufape.negocio.basica;
 
 
 import jakarta.persistence.*;
