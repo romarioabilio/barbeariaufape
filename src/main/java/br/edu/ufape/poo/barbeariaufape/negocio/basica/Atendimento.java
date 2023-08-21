@@ -24,16 +24,20 @@ public class Atendimento {
     
     @ManyToOne
     private Pagamento pagamento;
+
+     @ManyToOne
+    private Cliente cliente;
     
     public Atendimento() {
         // Construtor vazio necessário para JPA
     }
 
-    public Atendimento(Barbeiro barbeiro, Servico servico, Produto produto, Pagamento pagamento) {
+    public Atendimento(Barbeiro barbeiro, Servico servico, Produto produto, Pagamento pagamento,Cliente cliente) {
         this.barbeiro = barbeiro;
         this.servico = servico;
         this.produto = produto;
         this.pagamento = pagamento;
+        this.cliente = cliente;
     }
 
     // Getters e setters
@@ -76,5 +80,11 @@ public class Atendimento {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
+    }
+    public Cliente getCliente(){
+        return cliente;
+    }
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
     }
 }

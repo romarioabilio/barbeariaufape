@@ -12,7 +12,7 @@ public class Pagamento {
     private Long id;
 
     @ManyToOne
-    private Agendamento agendamento;
+    private Atendimento atendimento;
 
     private LocalDate dataPagamento;
     private double valorTotal;
@@ -25,8 +25,8 @@ public class Pagamento {
         // Construtor vazio necessário para JPA
     }
 
-    public Pagamento(Agendamento agendamento, LocalDate dataPagamento, double valorTotal, boolean pago, String tipoPagamento) {
-        this.agendamento = agendamento;
+    public Pagamento(Atendimento atendimento, LocalDate dataPagamento, double valorTotal, boolean pago, String tipoPagamento) {
+        this.atendimento = atendimento;
         this.dataPagamento = dataPagamento;
         this.valorTotal = valorTotal;
         this.pago = pago;
@@ -50,11 +50,11 @@ public class Pagamento {
     public void setId(Long id){
         this.id = id;
     }
-    public Agendamento getAgendamento() {
-        return agendamento;
+    public Atendimento getAtendimento() {
+        return atendimento;
     }
-    public void setAgendamento(Agendamento agendamento){
-        this.agendamento = agendamento;
+    public void setAtendimento(Atendimento atendimento){
+        this.atendimento = atendimento;
     }
     public LocalDate getDataPagamento() {
         return dataPagamento;
