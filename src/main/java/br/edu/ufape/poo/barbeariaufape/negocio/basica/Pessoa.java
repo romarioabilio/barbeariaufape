@@ -23,7 +23,7 @@ public class Pessoa {
     private Endereco endereco;
 
     public Pessoa() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Pessoa(String nome, String cpf, String telefone, Endereco endereco) {

@@ -17,7 +17,7 @@ public class Servico {
     private double preco;
 
     public Servico() {
-        // Construtor vazio necessário para JPA
+    
     }
 
     public Servico(String descricao, double preco) {

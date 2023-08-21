@@ -27,10 +27,10 @@ public class Agendamento {
     @ManyToOne
     private Servico servico;
     
-    // Construtores, getters e setters
+    
     
     public Agendamento() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Agendamento(LocalDateTime dataHora, Barbeiro barbeiro, Cliente cliente, Servico servico) {

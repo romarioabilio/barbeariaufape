@@ -9,7 +9,7 @@ public class Barbeiro extends Pessoa {
     
 
     public Barbeiro() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Barbeiro(String nome, String cpf, String telefone, Endereco endereco, String especialidade, double salario) {

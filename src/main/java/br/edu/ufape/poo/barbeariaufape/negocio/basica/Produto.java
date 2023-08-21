@@ -17,9 +17,9 @@ public class Produto {
     private String descricao;
     private int quantidade;
     //ESTÁ CERTO ????
-
+    //quantidade  retira estoque?
     public Produto() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Produto(String nome, double preco) {

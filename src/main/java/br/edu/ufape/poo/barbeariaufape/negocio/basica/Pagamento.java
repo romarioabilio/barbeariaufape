@@ -18,11 +18,11 @@ public class Pagamento {
     private double valorTotal;
     private boolean pago;
     
-    // Novo atributo para o tipo de pagamento
+    
     private String tipoPagamento;
 
     public Pagamento() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Pagamento(Atendimento atendimento, LocalDate dataPagamento, double valorTotal, boolean pago, String tipoPagamento) {
@@ -33,7 +33,7 @@ public class Pagamento {
         this.tipoPagamento = tipoPagamento;
     }
 
-    // Getters e setters
+    
     
    
 

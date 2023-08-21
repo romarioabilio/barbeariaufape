@@ -8,7 +8,7 @@ public class Admin extends Pessoa {
     private String cargo;
 
     public Admin() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Admin(String nome, String cpf, String telefone, Endereco endereco, String cargo) {

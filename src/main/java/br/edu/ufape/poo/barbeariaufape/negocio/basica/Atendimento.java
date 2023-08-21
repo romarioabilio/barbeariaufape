@@ -29,7 +29,7 @@ public class Atendimento {
     private Cliente cliente;
     
     public Atendimento() {
-        // Construtor vazio necessário para JPA
+        
     }
 
     public Atendimento(Barbeiro barbeiro, Servico servico, Produto produto, Pagamento pagamento,Cliente cliente) {
