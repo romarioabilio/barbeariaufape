@@ -17,7 +17,8 @@ public class Produto {
     private String descricao;
     private int quantidade;
     //ESTÁ CERTO ????
-    //quantidade  retira estoque?
+    //quantidade  retira estoque? 
+    // quantidade e estoque estão interligados, se sai 1 da quantidade retira 1 do estoque, quantidade == estoque
     public Produto() {
         
     }
