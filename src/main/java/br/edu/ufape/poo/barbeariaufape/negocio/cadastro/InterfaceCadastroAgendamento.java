@@ -10,7 +10,7 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
 
 public interface InterfaceCadastroAgendamento {
     
-   public void cadastrarAgendamento(Agendamento agendamento);
+    public Agendamento salvarAgendamento(Agendamento agendamento);
 
     public Agendamento consultarAgendamento(Long id);
 
@@ -23,8 +23,10 @@ public interface InterfaceCadastroAgendamento {
     public Agendamento consultarAgendamentoPorBarbeiro(Barbeiro barbeiro);
 
     public Agendamento consultarAgendamentoPorCliente(Cliente cliente);
-    
+
     public Agendamento consultarAgendamentoPorServico(Servico servico);
+
+    
 
     
 }
