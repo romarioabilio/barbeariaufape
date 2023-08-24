@@ -9,6 +9,8 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
 
 public interface InterfaceCadastroAgendamento {
+
+    public void cadastrarAgendamento(String data, String horaInicio, Barbeiro barbeiro, Cliente cliente, Servico servico);
     
     public Agendamento salvarAgendamento(Agendamento agendamento);
 
