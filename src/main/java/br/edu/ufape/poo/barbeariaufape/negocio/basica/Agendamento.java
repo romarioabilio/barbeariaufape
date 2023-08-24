@@ -40,7 +40,6 @@ public class Agendamento {
         this.servico = servico;
     }
 
-    // Getters e setters
     
     public Long getId() {
         return id;
