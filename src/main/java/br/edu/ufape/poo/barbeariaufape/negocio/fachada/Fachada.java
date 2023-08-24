@@ -36,7 +36,35 @@ public class Fachada {
     private InterfaceCadastroServico cadastroServico;
     
 
-    
+    public Servico procurarServicoNome(String nome) throws ServicoNaoExisteException{
+        return cadastroServico.procurarServicoNome(nome);
+    }
+
+	public Servico salvarServico(Servico entity) throws ServicoDuplicadoException{
+        return cadastroServico.salvarServico(entity);
+    }
+
+	public List<Servico> listarServicos(){
+        return cadastroServico.listarServicos();
+    }
+
+	public boolean verificarExistenciaServicoId(Long id){
+        return cadastroServico.verificarExistenciaServicoId(id);
+    }
+
+	public Servico localizarServicoId(Long id){
+        return cadastroServico.localizarServicoId(id);
+    }
+
+	public void removerServicoNome(String nome) throws ServicoNaoExisteException{
+        cadastroServico.removerServicoNome(nome);
+    }
+
+
+    public Produto procurarProdutoNome(String nome) throws ProdutoNaoExisteException{
+        return cadastroProduto.procurarProdutoNome(nome);
+    }
+
 
 
 
