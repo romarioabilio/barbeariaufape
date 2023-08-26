@@ -22,4 +22,5 @@ public interface InterfaceCadastroServico {
 
 	void removerServicoNome(String nome) throws ServicoNaoExisteException;
 
+	Servico atualizarServico(Servico servico) throws ServicoNaoExisteException;
 }

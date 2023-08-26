@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoServico;
+import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 
@@ -51,7 +53,13 @@ public class CadastroServico implements InterfaceCadastroServico {
 		Servico s = procurarServicoNome(nome);
 		colecaoServico.delete(s);
 	}
-
+	public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
+        Servico p = procurarServicoNome(servico.getNome());
+        p.setNome(servico.getNome());
+        p.setPreco(servico.getPreco());
+        p.setDescricao(servico.getDescricao());
+        return colecaoServico.save(p);
+    }
    
 
 	
