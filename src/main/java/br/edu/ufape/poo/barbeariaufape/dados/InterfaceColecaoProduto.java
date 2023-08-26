@@ -11,4 +11,5 @@ public interface InterfaceColecaoProduto
 	
 	
 	public Produto findByNome(String nome);
+	
 }

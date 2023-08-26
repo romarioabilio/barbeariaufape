@@ -9,6 +9,7 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 public interface InterfaceColecaoServico
 	extends JpaRepository<Servico, Long>{
 	
-	
 	public Servico findByNome(String nome);
+	
+	
 }
