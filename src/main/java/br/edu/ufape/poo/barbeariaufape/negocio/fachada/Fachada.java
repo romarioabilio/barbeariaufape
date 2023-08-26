@@ -43,6 +43,9 @@ public class Fachada {
 	public Servico salvarServico(Servico entity) throws ServicoDuplicadoException{
         return cadastroServico.salvarServico(entity);
     }
+    public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
+        return cadastroServico.atualizarServico(servico);
+    }
 
 	public List<Servico> listarServicos(){
         return cadastroServico.listarServicos();
@@ -63,6 +66,10 @@ public class Fachada {
 
     public Produto procurarProdutoNome(String nome) throws ProdutoNaoExisteException{
         return cadastroProduto.procurarProdutoNome(nome);
+    }
+
+    public  Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException{
+        return cadastroProduto.atualizarProduto(produto);
     }
 
 

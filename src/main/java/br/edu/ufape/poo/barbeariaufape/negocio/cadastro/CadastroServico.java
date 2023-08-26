@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoServico;
-import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
+//import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
+//import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 
