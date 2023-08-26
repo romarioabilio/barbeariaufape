@@ -54,11 +54,11 @@ public class CadastroServico implements InterfaceCadastroServico {
 		colecaoServico.delete(s);
 	}
 	public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
-        Servico p = procurarServicoNome(servico.getNome());
-        p.setNome(servico.getNome());
-        p.setPreco(servico.getPreco());
-        p.setDescricao(servico.getDescricao());
-        return colecaoServico.save(p);
+        Servico s = procurarServicoNome(servico.getNome());
+        s.setNome(servico.getNome());
+        s.setPreco(servico.getPreco());
+        s.setDescricao(servico.getDescricao());
+        return colecaoServico.save(s);
     }
    
 
