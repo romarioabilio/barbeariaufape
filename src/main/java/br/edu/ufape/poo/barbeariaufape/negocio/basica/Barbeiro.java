@@ -1,5 +1,7 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.basica;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -23,6 +25,10 @@ public class Barbeiro extends Pessoa {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public List<String> getHorariosDisponiveis() {
+        return null;
     }
 
    
