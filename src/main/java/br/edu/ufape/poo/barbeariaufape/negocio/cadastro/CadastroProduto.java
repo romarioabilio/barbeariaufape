@@ -51,6 +51,13 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 		Produto p = procurarProdutoNome(nome);
 		colecaoProduto.delete(p);
 	}
+	public Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException {
+		Produto p = procurarProdutoNome(produto.getNome());
+		p.setNome(produto.getNome());
+		p.setPreco(produto.getPreco());
+		p.setDescricao(produto.getDescricao());
+		return colecaoProduto.save(p);
+	}
 
    
 
