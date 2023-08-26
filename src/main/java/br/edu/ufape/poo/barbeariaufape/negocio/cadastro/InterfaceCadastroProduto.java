@@ -22,4 +22,6 @@ public interface InterfaceCadastroProduto {
 
 	void removerProdutoNome(String nome) throws ProdutoNaoExisteException;
 
+	Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException;
+
 }
