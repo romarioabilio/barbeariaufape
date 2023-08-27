@@ -1,42 +1,49 @@
 package br.edu.ufape.poo.barbeariaufape.comunicacao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroBarbeiro;
-
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
 @RestController
 public class BarbeiroController {
 
     @Autowired
     private CadastroBarbeiro barbeiroService;
 
+    @PostMapping(value = "/adicionarBarbeiro")
+	public ResponseEntity<Barbeiro> adicionarBarbeiro(@RequestBody Barbeiro b) {
+		return ResponseEntity.ok(barbeiroService.salvarBarbeiro(b));
+	}
+    
+    @GetMapping("/exibirBarbeiro/{id}")
+	public Barbeiro exibirBarbeiro(@PathVariable long id) {
+		return barbeiroService.procurarBarbeiroId(id);
+	}
 
-    @PostMapping("/criar")
-    public String criarBarbeiro(@RequestBody Barbeiro barbeiro) {
-        barbeiroService.criarBarbeiro(barbeiro, barbeiro.getHorariosDisponiveis());
-        return "Barbeiro criado com sucesso!";
+    @DeleteMapping(value = "/deletarBarbeiroId/{id}")
+    public void deletarBarbeiroId(@PathVariable Long id) {
+        barbeiroService.deletarBarbeiroId(id);
     }
 
-    @GetMapping("/listar")
-    public Iterable<Barbeiro> listarBarbeiros() {
+    @PatchMapping("/atualizarBarbeiro/{id}")
+	public Barbeiro atualizarDados(@PathVariable long id, @RequestBody Barbeiro b) throws BarbeiroDuplicadoException {
+		b.setId(id);
+		return barbeiroService.salvarBarbeiro(b);
+	}
+    @DeleteMapping("/deletarBarbeiro/{email}")
+	public String deletarBarbeiroEmail(@PathVariable String email) 
+		throws BarbeiroNaoExisteException {
+		barbeiroService.deletarBarbeiroEmail(email);
+		return"ok";
+	}
+    @GetMapping("/listarBarbeiro")
+    public List<Barbeiro> listarBarbeiros() {
         return barbeiroService.listarBarbeiros();
     }
 
-    @PostMapping("/horario")
-    public String adicionarHorarioDisponivel(@RequestBody String horario) {
-        barbeiroService.adicionarHorarioDisponivel(horario);
-        return "Horário disponível adicionado com sucesso!";
-    }
-
-    @DeleteMapping("/horario")
-    public String removerHorarioAgendado(@RequestBody String horario) {
-        barbeiroService.removerHorarioAgendado(horario);
-        return "Horário agendado removido com sucesso!";
-    }
-
-    @GetMapping("/horarios")
-    public Iterable<String> verHorariosDisponiveis() {
-        return barbeiroService.verHorariosDisponiveis();
-    }
 }

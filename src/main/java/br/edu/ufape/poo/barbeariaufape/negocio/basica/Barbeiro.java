@@ -26,10 +26,5 @@ public class Barbeiro extends Pessoa {
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
-
-    public List<String> getHorariosDisponiveis() {
-        return null;
-    }
-
    
 }
