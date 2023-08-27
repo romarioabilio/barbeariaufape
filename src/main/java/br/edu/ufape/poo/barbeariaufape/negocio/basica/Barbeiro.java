@@ -1,6 +1,6 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.basica;
 
-import java.util.List;
+
 
 import jakarta.persistence.*;
 
