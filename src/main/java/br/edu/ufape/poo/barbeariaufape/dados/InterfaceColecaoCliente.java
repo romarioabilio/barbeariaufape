@@ -12,5 +12,6 @@ public interface InterfaceColecaoCliente
 	extends JpaRepository<Cliente, Long> {
 	
 	public List<Cliente> findByNomeContaining(String nome);
+	public Cliente findByEmail(String email);
 
 }
