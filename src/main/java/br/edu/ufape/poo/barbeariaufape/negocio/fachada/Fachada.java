@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
+import br.edu.ufape.poo.barbeariaufape.negocio.basica.Cliente;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Admin;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Atendimento;
@@ -22,10 +23,13 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroProduto;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroServico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroBarbeiro;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroCliente;
 //import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteDuplicadoException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
@@ -42,6 +46,9 @@ public class Fachada {
     
     @Autowired
     private InterfaceCadastroBarbeiro cadastroBarbeiro;
+
+    @Autowired
+    private InterfaceCadastroCliente cadastroCliente;
 
     public Servico procurarServicoNome(String nome) throws ServicoNaoExisteException{
         return cadastroServico.procurarServicoNome(nome);
@@ -120,6 +127,43 @@ public class Fachada {
     public List<Barbeiro> listarBarbeiros(){
         return cadastroBarbeiro.listarBarbeiros();
     }
+
+    public List<Cliente> procurarClienteNome(String nome) throws ClienteNaoExisteException{
+        return cadastroCliente.procurarClienteNome(nome);
+    }
+
+	public Cliente procurarClienteId(long id) throws ClienteNaoExisteException{
+        return cadastroCliente.procurarClienteId(id);
+    }
+
+	public List<Cliente> listarClientes() {
+        return cadastroCliente.listarClientes();
+    }
+
+	public void deletarClienteId(Long id) throws ClienteNaoExisteException{
+        cadastroCliente.deletarClienteId(id);
+    }
+
+	public Cliente salvarCliente(Cliente cliente) throws ClienteDuplicadoException{
+        return cadastroCliente.salvarCliente(cliente);
+    }
+
+	public void deletarCliente(Cliente cliente) throws ClienteNaoExisteException{
+        cadastroCliente.deletarCliente(cliente);
+    }
+
+    public Cliente atualizarCliente(Cliente cliente) throws ClienteNaoExisteException{
+        return cadastroCliente.atualizarCliente(cliente);
+    }
+
+	public void deletarClienteEmail(String email) throws ClienteNaoExisteException {
+        cadastroCliente.deletarClienteEmail(email);
+    }
+
+	public Cliente procurarClienteEmail(String email) throws ClienteNaoExisteException {
+        return cadastroCliente.procurarClienteEmail(email);
+    }
+
 
 
 
