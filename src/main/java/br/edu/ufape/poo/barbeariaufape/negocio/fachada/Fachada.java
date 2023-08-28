@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Admin;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
 //import br.edu.ufape.poo.barbeariaufape.negocio.basica.Atendimento;
@@ -20,8 +21,11 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 //import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroProduto;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroServico;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroBarbeiro;
 //import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
@@ -36,6 +40,8 @@ public class Fachada {
     @Autowired
     private InterfaceCadastroServico cadastroServico;
     
+    @Autowired
+    private InterfaceCadastroBarbeiro cadastroBarbeiro;
 
     public Servico procurarServicoNome(String nome) throws ServicoNaoExisteException{
         return cadastroServico.procurarServicoNome(nome);
@@ -49,11 +55,11 @@ public class Fachada {
         return cadastroServico.listarServicos();
     }
 
-	public boolean verificarExistenciaServicoId(Long id){
+	public boolean verificarExistenciaServicoId(Long id) throws ServicoNaoExisteException{
         return cadastroServico.verificarExistenciaServicoId(id);
     }
 
-	public Servico localizarServicoId(Long id){
+	public Servico localizarServicoId(Long id) throws ServicoNaoExisteException{
         return cadastroServico.localizarServicoId(id);
     }
 
@@ -74,10 +80,10 @@ public class Fachada {
     public List<Produto> listarProdutos(){
         return cadastroProduto.listarProdutos();
     }
-    public boolean verificarExistenciaProdutoId(Long id){
+    public boolean verificarExistenciaProdutoId(Long id) throws ProdutoNaoExisteException{
         return cadastroProduto.verificarExistenciaProdutoId(id);
     }
-    public Produto localizarProdutoId(Long id){
+    public Produto localizarProdutoId(Long id) throws ProdutoNaoExisteException{
         return cadastroProduto.localizarProdutoId(id);
     }
     public void removerProdutoNome(String nome) throws ProdutoNaoExisteException{
@@ -87,7 +93,33 @@ public class Fachada {
         return cadastroProduto.atualizarProduto(produto);
     }
 
+    public Barbeiro salvarBarbeiro(Barbeiro barbeiro) throws BarbeiroDuplicadoException{
+        return cadastroBarbeiro.salvarBarbeiro(barbeiro);
+    }
 
+    public List<Barbeiro> procurarBarbeiroNome(String nome) throws BarbeiroNaoExisteException{
+        return cadastroBarbeiro.procurarBarbeiroNome(nome);
+    }
+
+    public Barbeiro procurarBarbeiroId(long id) throws BarbeiroNaoExisteException{
+        return cadastroBarbeiro.procurarBarbeiroId(id);
+    }
+    
+    public void deletarBarbeiroId(Long id) throws BarbeiroNaoExisteException{
+        cadastroBarbeiro.deletarBarbeiroId(id);
+    }
+
+    public void deletarBarbeiroEmail(String email) throws BarbeiroNaoExisteException{
+        cadastroBarbeiro.deletarBarbeiroEmail(email);
+    }
+
+    public Barbeiro atualizarBarbeiro(Barbeiro barbeiro) throws BarbeiroNaoExisteException{
+        return cadastroBarbeiro.atualizarBarbeiro(barbeiro);
+    }
+
+    public List<Barbeiro> listarBarbeiros(){
+        return cadastroBarbeiro.listarBarbeiros();
+    }
 
 
 

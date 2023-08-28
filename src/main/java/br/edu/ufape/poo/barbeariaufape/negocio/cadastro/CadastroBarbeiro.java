@@ -30,11 +30,7 @@ public class CadastroBarbeiro implements InterfaceCadastroBarbeiro {
 	public void deletarBarbeiroId(Long id) {
 		colecaoBarbeiro.deleteById(id);
 	}
-
-    @Override
-	public void deletarBarbeiro(Barbeiro barbeiro) {
-		colecaoBarbeiro.delete(barbeiro);
-	}
+    
     public Barbeiro procurarBarbeiroEmail(String email)
 		    throws BarbeiroNaoExisteException {
 		Barbeiro b = colecaoBarbeiro.findByEmail(email); 

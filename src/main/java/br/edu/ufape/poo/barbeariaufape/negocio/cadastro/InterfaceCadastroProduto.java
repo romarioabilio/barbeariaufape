@@ -16,9 +16,9 @@ public interface InterfaceCadastroProduto {
 
 	List<Produto> listarProdutos();
 
-	boolean verificarExistenciaProdutoId(Long id);
+	boolean verificarExistenciaProdutoId(Long id) throws ProdutoNaoExisteException;
 
-	Produto localizarProdutoId(Long id);
+	Produto localizarProdutoId(Long id) throws ProdutoNaoExisteException;
 
 	void removerProdutoNome(String nome) throws ProdutoNaoExisteException;
 

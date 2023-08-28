@@ -16,9 +16,9 @@ public interface InterfaceCadastroServico {
 
 	List<Servico> listarServicos();
 
-	boolean verificarExistenciaServicoId(Long id);
+	boolean verificarExistenciaServicoId(Long id) throws ServicoNaoExisteException;
 
-	Servico localizarServicoId(Long id);
+	Servico localizarServicoId(Long id) throws ServicoNaoExisteException;
 
 	void removerServicoNome(String nome) throws ServicoNaoExisteException;
 
