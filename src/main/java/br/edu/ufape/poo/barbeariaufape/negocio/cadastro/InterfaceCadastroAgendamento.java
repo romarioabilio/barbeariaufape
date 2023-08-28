@@ -1,34 +1,22 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.cadastro;
 
-import java.time.LocalDateTime;
-
-import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
-
-import br.edu.ufape.poo.barbeariaufape.negocio.basica.Cliente;
-import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import java.util.List;
+
+
 
 public interface InterfaceCadastroAgendamento {
 
-    public void cadastrarAgendamento(String data, String horaInicio, Barbeiro barbeiro, Cliente cliente, Servico servico);
-    
-    public Agendamento salvarAgendamento(Agendamento agendamento);
+	List<Agendamento> listarAgendamentos();
+	Agendamento encontrarPorId(Long id);
+	Agendamento cadastrarAgendamento(Agendamento agendamento);
+	void deletarAgendamento(Long id);
+	Agendamento atualizarAgendamento(Long id, Agendamento agendamento);
+	void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento);
+	List<LocalTime> horariosDisponiveis(Long id, LocalDate data);
+	Boolean encaixeHorario(String horarioEscolhidoInicio, List<String> horariosDisponiveis, List<Long> listaServicos);
 
-    public Agendamento consultarAgendamento(Long id);
-
-    public void alterarAgendamento(Agendamento agendamento);
-
-    public void excluirAgendamento(Long id);
-
-    public Agendamento consultarAgendamentoPorDataHora(LocalDateTime dataHora);
-
-    public Agendamento consultarAgendamentoPorBarbeiro(Barbeiro barbeiro);
-
-    public Agendamento consultarAgendamentoPorCliente(Cliente cliente);
-
-    public Agendamento consultarAgendamentoPorServico(Servico servico);
-
-    
-
-    
 }
