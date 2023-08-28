@@ -8,5 +8,5 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Atendimento;
 @Repository
 public interface InterfaceColecaoAtendimento
     extends JpaRepository<Atendimento, Long> {
-    public List<Atendimento> findByNomeContaining(String nome);
+    public List<Atendimento> findById(long id);
 }

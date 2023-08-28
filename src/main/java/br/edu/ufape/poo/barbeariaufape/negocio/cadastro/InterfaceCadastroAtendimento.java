@@ -17,4 +17,6 @@ public interface InterfaceCadastroAtendimento {
     boolean deletarAtendimento(Long id);
     List<Atendimento> listarAtentimento();
 
+    //interfacecadastroatendimento
+
 }
