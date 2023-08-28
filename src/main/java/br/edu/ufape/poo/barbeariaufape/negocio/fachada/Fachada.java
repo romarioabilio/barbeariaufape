@@ -22,6 +22,7 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroProduto
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroServico;
 //import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 
@@ -43,10 +44,7 @@ public class Fachada {
 	public Servico salvarServico(Servico entity) throws ServicoDuplicadoException{
         return cadastroServico.salvarServico(entity);
     }
-    public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
-        return cadastroServico.atualizarServico(servico);
-    }
-
+   
 	public List<Servico> listarServicos(){
         return cadastroServico.listarServicos();
     }
@@ -62,15 +60,33 @@ public class Fachada {
 	public void removerServicoNome(String nome) throws ServicoNaoExisteException{
         cadastroServico.removerServicoNome(nome);
     }
+     public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
+        return cadastroServico.atualizarServico(servico);
+    }
 
 
     public Produto procurarProdutoNome(String nome) throws ProdutoNaoExisteException{
         return cadastroProduto.procurarProdutoNome(nome);
     }
-
+    public Produto salvarProduto(Produto entity) throws  ProdutoDuplicadoException{
+        return cadastroProduto.salvarProduto(entity);
+    }
+    public List<Produto> listarProdutos(){
+        return cadastroProduto.listarProdutos();
+    }
+    public boolean verificarExistenciaProdutoId(Long id){
+        return cadastroProduto.verificarExistenciaProdutoId(id);
+    }
+    public Produto localizarProdutoId(Long id){
+        return cadastroProduto.localizarProdutoId(id);
+    }
+    public void removerProdutoNome(String nome) throws ProdutoNaoExisteException{
+        cadastroProduto.removerProdutoNome(nome);
+    }
     public  Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException{
         return cadastroProduto.atualizarProduto(produto);
     }
+
 
 
 
