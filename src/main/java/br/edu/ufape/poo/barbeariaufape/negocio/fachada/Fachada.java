@@ -78,8 +78,8 @@ public class Fachada {
     }
 
 
-    public Produto procurarProdutoNome(String nome) throws ProdutoNaoExisteException{
-        return cadastroProduto.procurarProdutoNome(nome);
+    public Produto procurarProduto(Long id) {
+        return cadastroProduto.procurarProduto(id);
     }
     public Produto salvarProduto(Produto entity) throws  ProdutoDuplicadoException{
         return cadastroProduto.salvarProduto(entity);
@@ -93,10 +93,10 @@ public class Fachada {
     public Produto localizarProdutoId(Long id) throws ProdutoNaoExisteException{
         return cadastroProduto.localizarProdutoId(id);
     }
-    public void removerProdutoNome(String nome) throws ProdutoNaoExisteException{
-        cadastroProduto.removerProdutoNome(nome);
+    public void removerProduto(Long id){
+        cadastroProduto.removerProduto(id);
     }
-    public  Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException{
+    public  Produto atualizarProduto(Produto produto){
         return cadastroProduto.atualizarProduto(produto);
     }
 

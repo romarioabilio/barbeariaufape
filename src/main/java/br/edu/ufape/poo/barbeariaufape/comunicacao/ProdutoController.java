@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroProduto;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class ProdutoController {
 
 	@Autowired
@@ -27,10 +29,11 @@ public class ProdutoController {
 	public List<Produto> listarProdutos() {
 		return produtoService.listarProdutos();
 	}
+
 	@PutMapping("/atualizarProduto")
-	public Produto atualizarProduto(@RequestBody Produto produto) throws ProdutoNaoExisteException {
-        return produtoService.atualizarProduto(produto);
-    }
+	public Produto atualizarProduto( @RequestBody Produto produto)  {
+		return produtoService.atualizarProduto(produto);
+	}
 
 	@GetMapping("/verificarExistenciaProdutoId/{id}")
 	public boolean verificarExistenciaProdutoId(@PathVariable Long id) {
@@ -43,19 +46,18 @@ public class ProdutoController {
 	}
 
 	@GetMapping("/procurarProdutoNome/{nome}")
-	public Produto procurarProdutoNome(@PathVariable String nome) throws ProdutoNaoExisteException {
-		return produtoService.procurarProdutoNome(nome);
+	public Produto procurarProduto(@PathVariable Long id) {
+		return produtoService.procurarProduto(id);
 	}
 
 	@PostMapping("/salvarProduto")
-	public Produto salvarProduto(@RequestBody Produto produto)
-			throws ProdutoNaoExisteException, ProdutoDuplicadoException {
+	public Produto salvarProduto(@RequestBody Produto produto) {
 		return produtoService.salvarProduto(produto);
 	}
 
-	@DeleteMapping("/removerProdutoNome/{nome}")
-	public void removerProdutoNome(@PathVariable String nome) throws ProdutoNaoExisteException {
-		produtoService.removerProdutoNome(nome);
+	@DeleteMapping("/removerProduto/{id}")
+	public void removerProduto(@PathVariable long id) {
+		produtoService.removerProduto(id);
 	}
 
 }

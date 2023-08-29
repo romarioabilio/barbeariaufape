@@ -10,6 +10,6 @@ public interface InterfaceColecaoProduto
 	extends JpaRepository<Produto, Long>{
 	
 	
-	public Produto findByNome(String nome);
+	public Produto findById(long id);
 	
 }

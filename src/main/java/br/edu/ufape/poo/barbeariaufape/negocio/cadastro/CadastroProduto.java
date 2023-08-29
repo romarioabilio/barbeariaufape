@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoProduto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 
 @Service
@@ -15,23 +14,8 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 	private InterfaceColecaoProduto colecaoProduto;
 
 	
-	public Produto procurarProdutoNome(String nome)
-			throws ProdutoNaoExisteException {
-		Produto p = colecaoProduto.findByNome(nome);
-		if(p == null) {
-			throw new ProdutoNaoExisteException(nome);
-		}
-		return p;
-	}
-	
-	public Produto salvarProduto(Produto entity)
-				throws ProdutoDuplicadoException {
-		try {
-			procurarProdutoNome(entity.getNome());
-			throw new ProdutoDuplicadoException(entity.getNome());
-		} catch(ProdutoNaoExisteException err) {
-			return colecaoProduto.save(entity);
-		}
+	public Produto salvarProduto(Produto entity) {
+		return colecaoProduto.save(entity);
 	}
 
 	public List<Produto> listarProdutos() {
@@ -46,17 +30,25 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 		return colecaoProduto.findById(id).orElse(null);
 	}
 	
-	public void removerProdutoNome(String nome) 
-			throws ProdutoNaoExisteException {
-		Produto p = procurarProdutoNome(nome);
-		colecaoProduto.delete(p);
-	}
-	public Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException {
-		Produto p = procurarProdutoNome(produto.getNome());
+	public Produto atualizarProduto(Produto produto)  {
+		Produto p = procurarProduto(produto.getId());
 		p.setNome(produto.getNome());
 		p.setPreco(produto.getPreco());
 		p.setDescricao(produto.getDescricao());
+		p.setQuantidade(produto.getQuantidade());
 		return colecaoProduto.save(p);
+	}
+
+	public void removerProduto(Long id) {
+		Produto p = procurarProduto(id);
+		colecaoProduto.delete(p);
+	}
+
+
+	public Produto procurarProduto(Long id) {
+		Produto p = colecaoProduto.findById(id).orElse(null);
+		return p;		
+
 	}
 
    

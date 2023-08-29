@@ -4,15 +4,14 @@ import java.util.List;
 
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 
 
 public interface InterfaceCadastroProduto {
 
-	Produto procurarProdutoNome(String nome) throws ProdutoNaoExisteException;
+	Produto procurarProduto(Long id);
 
-	Produto salvarProduto(Produto entity) throws ProdutoDuplicadoException;
+	Produto salvarProduto(Produto entity);
 
 	List<Produto> listarProdutos();
 
@@ -20,8 +19,8 @@ public interface InterfaceCadastroProduto {
 
 	Produto localizarProdutoId(Long id) throws ProdutoNaoExisteException;
 
-	void removerProdutoNome(String nome) throws ProdutoNaoExisteException;
+	void removerProduto(Long id);
 
-	Produto atualizarProduto(Produto produto) throws ProdutoNaoExisteException;
+	Produto atualizarProduto(Produto produto) ;
 
 }
