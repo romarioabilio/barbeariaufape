@@ -57,7 +57,7 @@ public class CadastroAgendamento implements InterfaceCadastroAgendamento {
     public void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento) {
         agendamento.setCliente(novoAgendamento.getCliente());
         agendamento.setBarbeiro(novoAgendamento.getBarbeiro());
-        //agendamento.setServicos(novoAgendamento.getServicos());
+         //agendamento.setServicos(novoAgendamento.getServicos());
         agendamento.setData(novoAgendamento.getData());
         agendamento.setHora(novoAgendamento.getHora());
         agendamento.setObservacao(novoAgendamento.getObservacao());

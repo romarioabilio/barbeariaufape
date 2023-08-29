@@ -12,4 +12,5 @@ public interface InterfaceCadastroAgendamento {
 	void deletarAgendamento(Long id);
 	Agendamento atualizarAgendamento(Long id, Agendamento agendamento);
 	void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento);
+	
 }
