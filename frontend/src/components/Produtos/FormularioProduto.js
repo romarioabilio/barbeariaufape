@@ -1,5 +1,6 @@
 import React from 'react'
-import './Formulario.css'
+import './FormularioProduto.css'
+import  { useState, useEffect } from 'react';
 
 function Formulario ({botao,eventoTeclado,cadastrar,cancelar,obj,remover,alterar})  {
   return (

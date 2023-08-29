@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { useState, useEffect } from 'react';
 function Tabela ({vetor,selecionar}){
   return (
         <table className='table'>
