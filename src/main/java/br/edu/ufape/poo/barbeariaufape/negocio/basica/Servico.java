@@ -15,7 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
-
 @Entity
 public class Servico implements Serializable{
 
@@ -28,7 +27,6 @@ public class Servico implements Serializable{
     private BigDecimal preco;
 
     public Servico() {
-    
     }
 
     public Servico(String nome, String descricao, BigDecimal preco) {
