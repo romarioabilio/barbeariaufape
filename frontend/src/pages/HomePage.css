@@ -1,7 +1,26 @@
 /* Estilos para a página inicial */
+h1{
+  text-align: center;
+  padding: 20px 20px 20;
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-shadow: 1px 1px 1px white;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+
+}
 nav {
-    background-color: #333;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 10px 0;
   }
   
@@ -19,11 +38,11 @@ nav {
   /* Estilos para os links */
   a {
     text-decoration: none;
-    color: white;
     font-weight: bold;
     transition: color 0.3s;
+    color: black;
   }
   
   a:hover {
-    color: #ff9900;
+    color: black;
   }

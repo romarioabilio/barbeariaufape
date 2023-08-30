@@ -4,6 +4,8 @@ import Tabela from '../components/Produtos/TabelaProduto';
 import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 const ProdutoPage = () => {
 
     const produto = {
