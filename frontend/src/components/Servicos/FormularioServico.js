@@ -1,17 +1,15 @@
 import React from 'react'
-import './FormularioProduto.css'
+import './FormularioServico.css'
 import  { useState, useEffect } from 'react';
 
-function FormularioProduto ({botao,eventoTeclado,cadastrar,cancelar,obj,remover,alterar})  {
+function FormularioServico ({botao,eventoTeclado,cadastrar,cancelar,obj,remover,alterar})  {
   return (
     <div>
-        <h2>Cadastro de Produtos</h2>
+        <h2>Cadastro de Serviços</h2>
         <form >
             <input type="text" value={obj.nome} onChange={eventoTeclado} name='nome' placeholder='Nome' className='form-control'/>
-            <input type="text" value={obj.preco} onChange={eventoTeclado} name='preco' placeholder='Preço' className='form-control'/>
             <input type="text" value={obj.descricao} onChange={eventoTeclado} name='descricao' placeholder='Descrição' className='form-control' />
-            <input type="text" value={obj.quantidade} onChange={eventoTeclado} name='quantidade' placeholder='Quantidade' className='form-control'/>
-
+            <input type="text" value={obj.preco} onChange={eventoTeclado} name='preco' placeholder='Preço' className='form-control'/>
 
             {
                 botao
@@ -30,4 +28,4 @@ function FormularioProduto ({botao,eventoTeclado,cadastrar,cancelar,obj,remover,
   );
 }
 
-export default FormularioProduto
+export default FormularioServico
