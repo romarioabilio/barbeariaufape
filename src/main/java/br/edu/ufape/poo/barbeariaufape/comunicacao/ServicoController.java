@@ -9,14 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
-//import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
 
 @RestController
@@ -41,26 +36,22 @@ public class ServicoController {
 	}
 
 	@GetMapping("/procurarServicoNome/{nome}")
-	public Servico procurarServicoNome(@PathVariable String nome) throws ServicoNaoExisteException {
+	public Servico procurarServicoNome(@PathVariable String nome) {
 		return servicoService.procurarServicoNome(nome);
 	}
 
 	@PostMapping("/salvarServico")
-	public Servico salvarServico(@RequestBody Servico servico)
-			throws ServicoNaoExisteException, ServicoDuplicadoException {
+	public Servico salvarServico(@RequestBody Servico servico) {
 		return servicoService.salvarServico(servico);
 	}
 
 	@PutMapping("/atualizarServico")
-    public Servico atualizarServico(@RequestBody Servico servico) throws ServicoNaoExisteException {
+    public Servico atualizarServico(@RequestBody Servico servico) {
         return servicoService.atualizarServico(servico);
     }
 
-
-
-	@DeleteMapping("/removerServicoNome/{nome}")
-	public void removerServicoNome(@PathVariable String nome) throws ServicoNaoExisteException {
-		servicoService.removerServicoNome(nome);
+	@DeleteMapping("/removerServico/{id}")
+	public void removerServico(@PathVariable long id) {
+		servicoService.removerServico(id);
 	}
-
 }

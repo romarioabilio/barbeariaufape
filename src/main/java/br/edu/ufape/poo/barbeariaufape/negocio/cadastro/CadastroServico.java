@@ -5,11 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoServico;
-//import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
-//import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 
 @Service
 public class CadastroServico implements InterfaceCadastroServico {
@@ -17,23 +13,14 @@ public class CadastroServico implements InterfaceCadastroServico {
 	private InterfaceColecaoServico colecaoServico;
 
 	
-	public Servico procurarServicoNome(String nome)
-			throws ServicoNaoExisteException {
+	public Servico procurarServicoNome(String nome) {
 		Servico s = colecaoServico.findByNome(nome);
-		if(s == null) {
-			throw new ServicoNaoExisteException(nome);
-		}
 		return s;
 	}
 	
-	public Servico salvarServico(Servico entity)
-				throws ServicoDuplicadoException {
-		try {
+	public Servico salvarServico(Servico entity) {
 			procurarServicoNome(entity.getNome());
-			throw new ServicoDuplicadoException(entity.getNome());
-		} catch(ServicoNaoExisteException err) {
 			return colecaoServico.save(entity);
-		}
 	}
 
 	public List<Servico> listarServicos() {
@@ -47,14 +34,20 @@ public class CadastroServico implements InterfaceCadastroServico {
 	public Servico localizarServicoId(Long id) {
 		return colecaoServico.findById(id).orElse(null);
 	}
-	
-	public void removerServicoNome(String nome) 
-			throws ServicoNaoExisteException {
-		Servico s = procurarServicoNome(nome);
+
+	public Servico procurarServico(Long id) {
+		Servico s = colecaoServico.findById(id).orElse(null);
+		return s;		
+
+	}
+
+	public void removerServico(Long id) {
+		Servico s = procurarServico(id);
 		colecaoServico.delete(s);
 	}
-	public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
-        Servico s = procurarServicoNome(servico.getNome());
+
+	public Servico atualizarServico(Servico servico) {
+        Servico s = procurarServico(servico.getId());
         s.setNome(servico.getNome());
         s.setPreco(servico.getPreco());
         s.setDescricao(servico.getDescricao());
