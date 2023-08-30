@@ -2,6 +2,7 @@ import React from 'react'
 import Formulario from '../components/Servicos/FormularioServico';
 import Tabela from '../components/Servicos/TabelaServico';
 import  { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ServicoPage = () => {
 
@@ -138,8 +139,23 @@ const ServicoPage = () => {
 
   return (
     <div>
-        <Formulario botao={btnCadastrarServico} eventoTeclado={aoDigitar}  cadastrar={cadastrar} cancelar={limparFormulario} obj={objServico} remover={remover} alterar={alterar}/>
+        <Formulario 
+        botao={btnCadastrarServico} 
+        eventoTeclado={aoDigitar}  
+        cadastrar={cadastrar} 
+        cancelar={limparFormulario} 
+        obj={objServico} 
+        remover={remover} 
+        alterar={alterar}
+        />
         <Tabela vetor={servicos} selecionar={selecionarServico}/>
+        <nav>
+      <ul>
+        <li>
+          <Link to="/Home">Voltar a Página inicial </Link>
+        </li>
+      </ul>
+    </nav>
     </div>
   )
 }

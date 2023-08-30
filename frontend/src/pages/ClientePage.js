@@ -1,112 +1,169 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import FormularioCliente from '../components/Clientes/FormularioCliente';
 import TabelaCliente from '../components/Clientes/TabelaCliente';
+import { Link } from 'react-router-dom';
 
 const ClientePage = () => {
+  const clienteInicial = {
+    nome: '',
+    cpf: '',
+    telefone: '',
+    email: '',
+    dataNascimento: '',
+    endereco: {
+      rua: '',
+      numero: '',
+      bairro: '',
+      cidade: '',
+      estado: '',
+      cep: '',
+    },
+  };
+
+  const [btnCadastrarCliente, setBtnCadastrarCliente] = useState(true);
   const [clientes, setClientes] = useState([]);
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [email, setEmail] = useState('');
-  const [rua, setRua] = useState('');
-  const [bairro, setBairro] = useState('');
-  const [estado, setEstado] = useState('');
-  const [cep, setCep] = useState('');
-  const [numero, setNumero] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [vip, setVip] = useState(false);
-
-  const baseURL = 'http://localhost:8080'; // Altere para a URL do seu servidor backend
-  const axiosInstance = axios.create({
-    baseURL: baseURL,
-  });
-
-  const fetchClientes = async () => {
-    try {
-      const response = await axiosInstance.get('/listarCliente'); // Certifique-se de que a rota esteja correta
-      setClientes(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar clientes:', error);
-    }
-  };
-  
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const novoCliente = {
-      nome,
-      cpf,
-      telefone,
-      endereco: {
-        rua,
-        bairro,
-        estado,
-        cep,
-        numero,
-        cidade,
-      },
-      vip,
-    };
-
-    try {
-      await axios.post('/adicionarCliente', novoCliente); // Verifique se a URL está correta
-      fetchClientes();
-      // Limpar campos após a adição bem-sucedida
-      setNome('');
-      setCpf('');
-      setTelefone('');
-      setEmail('');
-      setRua('');
-      setBairro('');
-      setEstado('');
-      setCep('');
-      setNumero('');
-      setCidade('');
-      setVip(false);
-    } catch (error) {
-      console.error('Erro ao adicionar cliente:', error);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`/deletarClienteId/${id}`); // Verifique se a URL está correta
-      fetchClientes();
-    } catch (error) {
-      console.error('Erro ao deletar cliente:', error);
-    }
-  };
-  const handleUpdate = async (id) => {
-    const clienteToUpdate = clientes.find((cliente) => cliente.id === id);
-    if (!clienteToUpdate) {
-      console.error('Cliente não encontrado para atualização.');
-      return;
-    }
-  
-    try {
-      // Implemente o código aqui para exibir um formulário de atualização
-      // e enviar as informações atualizadas para o backend
-      // Você pode usar o mesmo padrão de handleSubmit
-      // Lembre-se de passar as informações atuais do cliente para o formulário
-    } catch (error) {
-      console.error('Erro ao atualizar cliente:', error);
-    }
-  };
+  const [clienteAtual, setClienteAtual] = useState(clienteInicial);
 
   useEffect(() => {
-    fetchClientes();
+    fetch("http://localhost:8080/listarCliente")
+      .then((retorno) => retorno.json())
+      .then((retorno_convertido) => setClientes(retorno_convertido));
   }, []);
+
+  const aoDigitar = (e) => {
+    setClienteAtual({...clienteAtual, [e.target.name]:e.target.value});
+  };
+  const aoDigitarEndereco = (e) => {
+    setClienteAtual({...clienteAtual, endereco: {...clienteAtual.endereco, [e.target.name]:e.target.value}});
+  };
+
+  const limparFormulario = () => {
+    setClienteAtual(clienteInicial);
+    setBtnCadastrarCliente(true);
+  };
+
+  const selecionarCliente = (indice) => {
+    setClienteAtual(clientes[indice]);
+    setBtnCadastrarCliente(false);
+  };
+
+  const cadastrar = () => {
+    // Verificar campos obrigatórios
+    if (clienteAtual.nome.trim() === '' || clienteAtual.cpf.trim() === '') {
+      alert("Por favor, preencha os campos obrigatórios.");
+      return;
+    }
+
+    fetch("http://localhost:8080/adicionarCliente", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(clienteAtual)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao cadastrar cliente.");
+      }
+      return response.json();
+      })
+      .then(retorno_convertido =>{
+        setClientes([...clientes, retorno_convertido]);
+        alert("Cliente cadastrado com Sucesso !")
+        limparFormulario();
+        
+      })
+      .catch((error) => {
+        console.error("Erro:", error);
+      });
+  };
+
+  const remover = () => {
+    const confirmacao = window.confirm("Tem certeza que deseja remover o cliente?");
+    if (!confirmacao) {
+      return; // Cancela a remoção se o usuário não confirmar
+    }
+  
+    fetch("http://localhost:8080/deletarClienteId/" + clienteAtual.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao remover cliente.');
+      }
+      const vetorTemp = clientes.filter(p => p.id !== clienteAtual.id);
+      setClientes(vetorTemp);
+      limparFormulario();
+      alert("Cliente removido com sucesso!");
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      // Trate o erro aqui, se necessário
+    });
+  }
+
+  const alterar = () => {
+    fetch("http://localhost:8080/atualizarCliente/" + clienteAtual.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(clienteAtual)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar cliente.');
+      }
+      return response.json(); // Retornar o JSON da resposta
+    })
+    .then(atualizado => {
+      const vetorTemp = clientes.map(p => {
+        if (p.id === clienteAtual.id) {
+          return atualizado; // Usar o serviço atualizado
+        }
+        return p;
+      });
+      setClientes(vetorTemp);
+      limparFormulario();
+      alert("Cliente alterado com sucesso!");
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+      // Trate o erro aqui, se necessário
+    });
+  }
+    
+
+  // Funções para atualizar e remover são semelhantes às do código anterior
 
   return (
     <div>
-    <h1>Clientes</h1>
-    <form onSubmit={handleSubmit} clientes={clientes}>
-      <h2>Cadastrar Novo Cliente</h2>
-      {/* ... campos do formulário de cadastro ... */}
-      <button className='btn btn-success' type="submit">Cadastrar</button>
-    </form>
-    <TabelaCliente  clientes={clientes}/>
-  </div>
+      <FormularioCliente
+        botao={btnCadastrarCliente}
+        eventoTeclado={aoDigitar}
+        eventoTecladoEndereco={aoDigitarEndereco}
+        cadastrar={cadastrar}
+        cancelar={limparFormulario}
+        obj={clienteAtual}
+        remover={remover}
+        alterar={alterar}
+      />
+      <TabelaCliente vetor={clientes} selecionar={selecionarCliente} />
+      <nav>
+      <ul>
+        <li>
+          <Link to="/Home">Voltar a Página inicial </Link>
+        </li>
+      </ul>
+    </nav>
+
+    </div>
   );
 };
 

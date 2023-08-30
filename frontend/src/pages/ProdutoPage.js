@@ -2,6 +2,7 @@ import React from 'react'
 import Formulario from '../components/Produtos/FormularioProduto';
 import Tabela from '../components/Produtos/TabelaProduto';
 import  { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const ProdutoPage = () => {
 
@@ -141,6 +142,14 @@ const ProdutoPage = () => {
     <div>
         <Formulario botao={btnCadastrar} eventoTeclado={aoDigitar}  cadastrar={cadastrar} cancelar={limparFormulario} obj={objProduto} remover={remover} alterar={alterar}/>
         <Tabela vetor={produtos} selecionar={selecionarProduto}/>
+
+        <nav>
+      <ul>
+        <li>
+          <Link to="/Home">Voltar a Página inicial </Link>
+        </li>
+      </ul>
+    </nav>
     </div>
   )
 }

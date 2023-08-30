@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+
+
 function TabelaServico ({vetor,selecionar}){
   return (
         <table className='table'>
@@ -15,6 +17,7 @@ function TabelaServico ({vetor,selecionar}){
             <tbody>
               {
                 vetor.map((obj,indice)=>(
+
                     <tr key={indice}>
                         <td>{indice+1}</td>
                         <td>{obj.nome}</td>
