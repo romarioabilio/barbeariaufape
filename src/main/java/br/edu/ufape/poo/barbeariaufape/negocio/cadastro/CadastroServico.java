@@ -11,15 +11,8 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 public class CadastroServico implements InterfaceCadastroServico {
 	@Autowired
 	private InterfaceColecaoServico colecaoServico;
-
-	
-	public Servico procurarServicoNome(String nome) {
-		Servico s = colecaoServico.findByNome(nome);
-		return s;
-	}
 	
 	public Servico salvarServico(Servico entity) {
-			procurarServicoNome(entity.getNome());
 			return colecaoServico.save(entity);
 	}
 

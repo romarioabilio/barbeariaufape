@@ -7,12 +7,11 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExis
 
 public interface InterfaceCadastroServico {
 	
-	Servico procurarServicoNome(String nome);
+	Servico procurarServico(Long id);
 	Servico salvarServico(Servico entity);
 	List<Servico> listarServicos();
 	boolean verificarExistenciaServicoId(Long id) throws ServicoNaoExisteException;
 	Servico localizarServicoId(Long id);
 	void removerServico(Long id);
-	Servico procurarServico(Long id);
 	Servico atualizarServico(Servico servico);
 }

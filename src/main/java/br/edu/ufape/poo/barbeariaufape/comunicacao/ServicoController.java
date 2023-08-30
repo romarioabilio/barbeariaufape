@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class ServicoController {
 
 	@Autowired
@@ -25,31 +28,31 @@ public class ServicoController {
 		return servicoService.listarServicos();
 	}
 
+	@PutMapping("/atualizarServico")
+    public Servico atualizarServico(@RequestBody Servico servico) {
+		return servicoService.atualizarServico(servico);
+    }
+	
 	@GetMapping("/verificarExistenciaServicoId/{id}")
 	public boolean verificarExistenciaServicoId(@PathVariable Long id) {
 		return servicoService.verificarExistenciaServicoId(id);
 	}
-
+	
 	@GetMapping("/localizarServicoId/{id}")
 	public Servico localizarServicoId(@PathVariable Long id) {
 		return servicoService.localizarServicoId(id);
 	}
-
-	@GetMapping("/procurarServicoNome/{nome}")
-	public Servico procurarServicoNome(@PathVariable String nome) {
-		return servicoService.procurarServicoNome(nome);
+	
+	@GetMapping("/procurarServico/{id}")
+	public Servico procurarServico(@PathVariable Long id) {
+		return servicoService.procurarServico(id);
 	}
-
+	
 	@PostMapping("/salvarServico")
 	public Servico salvarServico(@RequestBody Servico servico) {
 		return servicoService.salvarServico(servico);
 	}
-
-	@PutMapping("/atualizarServico")
-    public Servico atualizarServico(@RequestBody Servico servico) {
-        return servicoService.atualizarServico(servico);
-    }
-
+	
 	@DeleteMapping("/removerServico/{id}")
 	public void removerServico(@PathVariable long id) {
 		servicoService.removerServico(id);

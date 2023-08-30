@@ -36,10 +36,6 @@ public class Fachada {
     @Autowired
     private InterfaceCadastroCliente cadastroCliente;
 
-    public Servico procurarServicoNome(String nome) throws ServicoNaoExisteException{
-        return cadastroServico.procurarServicoNome(nome);
-    }
-
 	public Servico salvarServico(Servico entity) throws ServicoDuplicadoException{
         return cadastroServico.salvarServico(entity);
     }

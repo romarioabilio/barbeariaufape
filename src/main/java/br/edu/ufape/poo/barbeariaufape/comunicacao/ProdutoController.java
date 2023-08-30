@@ -43,7 +43,7 @@ public class ProdutoController {
 		return produtoService.localizarProdutoId(id);
 	}
 
-	@GetMapping("/procurarProdutoNome/{nome}")
+	@GetMapping("/procurarProduto/{id}")
 	public Produto procurarProduto(@PathVariable Long id) {
 		return produtoService.procurarProduto(id);
 	}
