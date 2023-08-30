@@ -1,5 +1,6 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.basica;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,25 +23,23 @@ public class Atendimento {
     @ManyToOne
     private Produto produto;
     
-    @ManyToOne
-    private Pagamento pagamento;
+    @Column
+    private String pagamento;
 
-     @ManyToOne
+    @ManyToOne
     private Cliente cliente;
     
     public Atendimento() {
         
     }
 
-    public Atendimento(Barbeiro barbeiro, Servico servico, Produto produto, Pagamento pagamento,Cliente cliente) {
+    public Atendimento(Barbeiro barbeiro, Servico servico, Produto produto, String pagamento,Cliente cliente) {
         this.barbeiro = barbeiro;
         this.servico = servico;
         this.produto = produto;
         this.pagamento = pagamento;
         this.cliente = cliente;
     }
-
-    // Getters e setters
     
     public Long getId() {
         return id;
@@ -74,11 +73,11 @@ public class Atendimento {
         this.produto = produto;
     }
 
-    public Pagamento getPagamento() {
+    public String getPagamento() {
         return pagamento;
     }
 
-    public void setPagamento(Pagamento pagamento) {
+    public void setPagamento(String pagamento) {
         this.pagamento = pagamento;
     }
     public Cliente getCliente(){
