@@ -1,12 +1,12 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.cadastro;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoProduto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 
 @Service
 public class CadastroProduto implements InterfaceCadastroProduto {
@@ -44,14 +44,9 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 		colecaoProduto.delete(p);
 	}
 
-
 	public Produto procurarProduto(Long id) {
 		Produto p = colecaoProduto.findById(id).orElse(null);
 		return p;		
 
-	}
-
-   
-
-	
+	}	
 }

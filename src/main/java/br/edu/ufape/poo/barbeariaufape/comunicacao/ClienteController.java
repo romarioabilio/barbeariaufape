@@ -55,5 +55,4 @@ public class ClienteController {
 		clienteService.deletarClienteEmail(email);
 		return "ok";
 	}
-
 }

@@ -1,6 +1,7 @@
 package br.edu.ufape.poo.barbeariaufape.comunicacao;
 
 import org.springframework.http.ResponseEntity;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.util.List;
@@ -10,8 +11,6 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroAgendamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
 
 @RestController
 @RequestMapping("/agendamentos")

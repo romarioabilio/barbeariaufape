@@ -45,5 +45,4 @@ public class BarbeiroController {
     public List<Barbeiro> listarBarbeiros() {
         return barbeiroService.listarBarbeiros();
     }
-
 }

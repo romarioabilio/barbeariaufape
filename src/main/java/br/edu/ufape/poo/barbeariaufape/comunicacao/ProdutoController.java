@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroProduto;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -59,5 +57,4 @@ public class ProdutoController {
 	public void removerProduto(@PathVariable long id) {
 		produtoService.removerProduto(id);
 	}
-
 }

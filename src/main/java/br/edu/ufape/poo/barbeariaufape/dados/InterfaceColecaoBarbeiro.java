@@ -11,7 +11,6 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 public interface InterfaceColecaoBarbeiro 
     extends JpaRepository<Barbeiro, Long>{
 	
-	
 	public List<Barbeiro> findByNomeContaining(String nome);
     public Barbeiro findByEmail(String email);
 }

@@ -11,8 +11,8 @@ import org.springframework.data.repository.query.Param;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 
-
-public interface InterfaceColecaoAgendamento extends JpaRepository<Agendamento, Long>{
+public interface InterfaceColecaoAgendamento 
+    extends JpaRepository<Agendamento, Long>{
 
     List<Agendamento> findAllByBarbeiroAndData(Barbeiro barbeiro, LocalDate data);
     @Query("SELECT SUM(s.preco) FROM Agendamento a JOIN a.servicos s WHERE a.id = :agendamentoId")
