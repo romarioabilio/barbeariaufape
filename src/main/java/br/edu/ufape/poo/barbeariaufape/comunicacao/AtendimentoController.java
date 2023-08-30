@@ -1,67 +1,53 @@
 package br.edu.ufape.poo.barbeariaufape.comunicacao;
 
+import java.io.Serializable;
+import java.net.URI;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Atendimento;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroAtendimento;
 
 @RestController
 @RequestMapping
-public class AtendimentoController {
-
+@CrossOrigin(origins = "*")
+public class AtendimentoController implements Serializable {
+    
+    private final CadastroAtendimento atendimentoService;
+    
     @Autowired
-    private CadastroAtendimento atendimentoService;
-
-    @PostMapping("/criarAtendimento")
-    public ResponseEntity<Atendimento> cadastrarAtendimento(@RequestBody Atendimento atendimento) {
-        Atendimento novoAtendimento = atendimentoService.cadastrarAtendimento(
-                atendimento.getBarbeiro(),
-                atendimento.getServico(),
-                atendimento.getProduto(),
-                atendimento.getPagamento(),
-                atendimento.getCliente()
-        );
-        return new ResponseEntity<>(novoAtendimento, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/atualizarAtendimento/{id}")
-    public ResponseEntity<Atendimento> atualizarAtendimento(
-            @PathVariable Long id,
-            @RequestBody Atendimento atendimento) {Atendimento atendimentoAtualizado = atendimentoService.atualizarAtendimento(
-                id,
-                atendimento.getBarbeiro(),
-                atendimento.getServico(),
-                atendimento.getProduto(),
-                atendimento.getPagamento(),
-                atendimento.getCliente()
-        );
-
-        if (atendimentoAtualizado != null) {
-            return new ResponseEntity<>(atendimentoAtualizado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/deletarAtendimentoId/{id}")
-    public ResponseEntity<Void> deletarAtendimento(@PathVariable Long id) {
-        boolean sucesso = atendimentoService.deletarAtendimento(id);
-
-        if (sucesso) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public AtendimentoController(CadastroAtendimento cadastroAtendimento) {
+        this.atendimentoService = cadastroAtendimento;
     }
 
     @GetMapping("/listarAtendimentos")
-    public ResponseEntity<List<Atendimento>> listarAtendimento() {
-        List<Atendimento> atendimentos = atendimentoService.listarAtentimento();
-        return new ResponseEntity<>(atendimentos, HttpStatus.OK);
+    public List<Atendimento> listarAtendimentos() {
+        return atendimentoService.listarAtentimento();
+    }
+
+    @GetMapping("/procurarAtendimentoId/{id}")
+    public Atendimento encontrarPorId(@PathVariable Long id) {
+        return atendimentoService.encontrarPorId(id);
+    }
+
+    @PostMapping("/novoAtendimento")
+    public ResponseEntity<Atendimento> cadastrar(@RequestBody Atendimento atendimento){
+		atendimento = atendimentoService.cadastrarAtendimento(atendimento);
+		URI uri = ServletUriComponentsBuilder.fromPath("/{id}").buildAndExpand(atendimento.getId()).toUri();
+		return ResponseEntity.created(uri).body(atendimento);
+	}
+    
+    @DeleteMapping("/deletarAtendimentoId/{id}")
+    public void deletarAtendimento(@PathVariable Long id) {
+        atendimentoService.deletarAtendimento(id);
+    }
+
+    @PutMapping("/atualizarAtendimentoId/{id}")
+    public Atendimento atualizarAtendimento(@PathVariable Long id, @RequestBody Atendimento atendimento) {
+        return atendimentoService.atualizarAtendimento(id, atendimento);
     }
 }
