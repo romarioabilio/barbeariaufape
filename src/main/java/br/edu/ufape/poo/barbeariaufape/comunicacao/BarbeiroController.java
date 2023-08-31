@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroBarbeiro;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
 
 @RestController
@@ -34,7 +33,7 @@ public class BarbeiroController {
     }
 
     @PatchMapping("/atualizarBarbeiro/{id}")
-	public Barbeiro atualizarDados(@PathVariable long id, @RequestBody Barbeiro b) throws BarbeiroDuplicadoException {
+	public Barbeiro atualizarDados(@PathVariable long id, @RequestBody Barbeiro b)  {
 		b.setId(id);
 		return barbeiroService.salvarBarbeiro(b);
 	}

@@ -14,6 +14,8 @@ import jakarta.persistence.*;
 public class Barbeiro extends Pessoa {
 
     private String especialidade;
+
+    private double salario;
     
 
     public Barbeiro() {
@@ -22,6 +24,7 @@ public class Barbeiro extends Pessoa {
 
     public Barbeiro(String nome, String cpf, String telefone, Endereco endereco, String especialidade, double salario) {
         super(nome, cpf, telefone, endereco);
+        this.salario = salario;
         this.especialidade = especialidade;
     }
 
@@ -31,6 +34,14 @@ public class Barbeiro extends Pessoa {
 
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
+    }
+    
+    public double getSalario() {
+        return salario;
+    }
+    
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 
     @OneToMany(mappedBy = "barbeiro", cascade = CascadeType.ALL)
