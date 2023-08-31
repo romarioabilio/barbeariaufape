@@ -12,3 +12,4 @@ public interface InterfaceCadastroUsuario {
     void deletarUsuario(Long id);
     Usuario atualizarUsuario(Long id, Usuario usuario);
 }
+//usuario
