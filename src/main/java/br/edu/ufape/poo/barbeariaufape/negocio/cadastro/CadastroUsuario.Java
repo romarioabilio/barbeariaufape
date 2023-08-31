@@ -1,5 +1,7 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.cadastro;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +25,30 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 		}
 		return retorno;
 	}
+	@Override
+	public List<Usuario> listarUsuarios() {
+		return colecaoUsuario.findAll();
+	}
 
 	@Override
 	public Usuario cadastrar(Usuario usuario) {
 		return colecaoUsuario.save(usuario);
 	}
 
+	@Override
+	public void deletarUsuario(Long id) {
+		colecaoUsuario.deleteById(id);
+	}
+
+	@Override
+	public Usuario atualizarUsuario(Long id, Usuario usuario) {
+		Usuario usuarioExistente = colecaoUsuario.findById(id).orElse(null);
+		if (usuarioExistente != null) {
+			usuarioExistente.setLogin(usuario.getLogin());
+			usuarioExistente.setSenha(usuario.getSenha());
+			usuarioExistente.setTipo(usuario.getTipo());
+			return colecaoUsuario.save(usuarioExistente);
+		}
+		return null;
+	}
 }
