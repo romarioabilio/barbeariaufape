@@ -10,3 +10,4 @@ public interface InterfaceColecaoUsuario extends JpaRepository<Usuario, Long> {
 
 	Usuario findByLoginAndSenha(String login, String senha);
 }
+//usuario

@@ -25,3 +25,4 @@ public class Usuario {
 	private String tipo;
 
 }
+//usuario

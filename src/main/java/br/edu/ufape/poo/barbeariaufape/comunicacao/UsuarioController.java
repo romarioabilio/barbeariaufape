@@ -52,3 +52,4 @@ public class UsuarioController implements Serializable {
 		return usuarioService.atualizarUsuario(id, agendamento);
 	}
 }
+//usuario

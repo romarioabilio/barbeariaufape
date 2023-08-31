@@ -52,3 +52,4 @@ public class CadastroUsuario implements InterfaceCadastroUsuario {
 		return null;
 	}
 }
+//usuario
