@@ -18,18 +18,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
 
 @Setter
 @Getter
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Agendamento implements Serializable {
 
@@ -40,11 +33,9 @@ public class Agendamento implements Serializable {
     private Long id;
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	@NonNull
     private LocalDate data;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    @NonNull
     private LocalTime hora;
 
     private BigDecimal total;
@@ -52,11 +43,9 @@ public class Agendamento implements Serializable {
     private String observacao;
     
     @ManyToOne
-    @NonNull
     private Barbeiro barbeiro;
     
     @ManyToOne
-    @NonNull
     private Cliente cliente;
     
     @ManyToMany
@@ -90,5 +79,4 @@ public class Agendamento implements Serializable {
 		Agendamento other = (Agendamento) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

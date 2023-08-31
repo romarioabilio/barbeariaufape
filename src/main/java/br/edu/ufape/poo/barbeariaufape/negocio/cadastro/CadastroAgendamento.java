@@ -54,13 +54,27 @@ public class CadastroAgendamento implements InterfaceCadastroAgendamento {
     }
 
     @Override
-    public void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento) {
-        agendamento.setCliente(novoAgendamento.getCliente());
-        agendamento.setBarbeiro(novoAgendamento.getBarbeiro());
-        agendamento.setServicos(novoAgendamento.getServicos());
-        agendamento.setData(novoAgendamento.getData());
-        agendamento.setHora(novoAgendamento.getHora());
-        agendamento.setObservacao(novoAgendamento.getObservacao());
-        agendamento.setTotal(novoAgendamento.getTotal());
-    }
+	public void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento) {
+		if (novoAgendamento.getCliente() != null) {
+			agendamento.setCliente(novoAgendamento.getCliente());
+		}
+		if (novoAgendamento.getBarbeiro() != null) {
+			agendamento.setBarbeiro(novoAgendamento.getBarbeiro());
+		}
+		if (novoAgendamento.getServicos() != null) {
+			agendamento.setServicos(novoAgendamento.getServicos());
+		}
+		if (novoAgendamento.getData() != null) {
+			agendamento.setData(novoAgendamento.getData());
+		}
+		if (novoAgendamento.getHora() != null) {
+			agendamento.setHora(novoAgendamento.getHora());
+		}
+		if (novoAgendamento.getObservacao() != null) {
+			agendamento.setObservacao(novoAgendamento.getObservacao());
+		}
+		if (novoAgendamento.getTotal() != null) {
+			agendamento.setTotal(novoAgendamento.getTotal());
+		}
+	}
 }

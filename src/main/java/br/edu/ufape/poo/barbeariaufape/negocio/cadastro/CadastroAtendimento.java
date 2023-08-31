@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,16 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Cliente;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoAtendimento;
+import br.edu.ufape.poo.barbeariaufape.dados.InterfaceColecaoProduto;
 
 @Service
 public class CadastroAtendimento implements InterfaceCadastroAtendimento {
 
     @Autowired
     private InterfaceColecaoAtendimento colecaoAtendimento;
+
+    @Autowired
+	private InterfaceColecaoProduto colecaoProduto;
 
     @Autowired
     public CadastroAtendimento(InterfaceColecaoAtendimento colecaoAtendimento) {
@@ -37,13 +42,22 @@ public class CadastroAtendimento implements InterfaceCadastroAtendimento {
     }
 
     @Override
-    public Atendimento cadastrarAtendimento(Atendimento atendimento) {
-        Atendimento novoAtendimento = this.colecaoAtendimento.save(atendimento);
-        BigDecimal totalServicos = colecaoAtendimento.getTotalServicos(novoAtendimento.getId());
-        BigDecimal totalProdutos = novoAtendimento.getTotal(); // Calcular o total dos produtos aqui
-        novoAtendimento.setTotal(totalServicos.add(totalProdutos)); // Somar os totais de serviços e produtos
-        return this.colecaoAtendimento.save(novoAtendimento);
-    }
+	public Atendimento cadastrarAtendimento(Atendimento atendimento) {
+		Atendimento novoAtendimento = this.colecaoAtendimento.save(atendimento);
+		BigDecimal totalServicos = colecaoAtendimento.getTotalServicos(novoAtendimento.getId());
+
+		for (Produto item : atendimento.getProdutos()) {
+			Optional<Produto> produtoOptional = colecaoProduto.findById(item.getId());
+			if (produtoOptional.isPresent()) {
+				Produto produtoFor = produtoOptional.get();
+				BigDecimal valorItemMultiplicado = produtoFor.getPreco().multiply(new BigDecimal(item.getQuantidade()));
+				novoAtendimento.setTotal(totalServicos.add(valorItemMultiplicado)); 
+				produtoFor.setQuantidade(produtoFor.getQuantidade() - item.getQuantidade());
+				colecaoProduto.save(produtoFor);
+			}
+		}
+		return this.colecaoAtendimento.save(novoAtendimento);
+	}
 
     @Override
     public void adicionarProduto(Atendimento atendimento, Produto produto) {
