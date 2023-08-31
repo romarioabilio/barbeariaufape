@@ -48,7 +48,7 @@ const LoginPage = () => {
       <MDBBtn className="mb-4">Entrar</MDBBtn>
 
       <div className="text-center">
-        <p>Não é um usúario ? <a href="http://localhost:3001/Clientes">Cadastre-se</a></p>
+        <p>Não é um usúario ? <a href="http://localhost:3000/Clientes">Cadastre-se</a></p>
         <div className='d-flex justify-content-between mx-auto' style={{width: '40%'}}>
           <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
             <MDBIcon fab icon='facebook-f' size="sm"/>
