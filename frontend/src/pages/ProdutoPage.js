@@ -148,7 +148,9 @@ const ProdutoPage = () => {
         <nav>
       <ul>
         <li>
-          <Link to="/Home">Voltar a Página inicial </Link>
+        <button>
+          <Link to="/">Ir para a página Inicial</Link>
+        </button>
         </li>
       </ul>
     </nav>

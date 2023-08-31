@@ -158,7 +158,9 @@ const ClientePage = () => {
       <nav>
       <ul>
         <li>
-          <Link to="/Home">Voltar a Página inicial </Link>
+        <button>
+          <Link to="/">Ir para a página de inicial</Link>
+        </button>
         </li>
       </ul>
     </nav>

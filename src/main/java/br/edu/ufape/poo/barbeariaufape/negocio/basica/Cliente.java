@@ -13,24 +13,14 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Cliente extends Pessoa {
 
-    private boolean vip;
-
     public Cliente() {
 
     }
 
     public Cliente(String nome, String cpf, String telefone, Endereco endereco, boolean vip) {
         super(nome, cpf, telefone, endereco);
-        this.vip = vip;
     }
 
-    public boolean isVip() {
-        return vip;
-    }
-
-    public void setVip(boolean vip) {
-        this.vip = vip;
-    }
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JsonIgnore
