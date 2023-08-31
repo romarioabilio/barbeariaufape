@@ -9,7 +9,10 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroBarbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
+
 @RestController
+@RequestMapping
+@CrossOrigin(origins = "*")
 public class BarbeiroController {
 
     @Autowired
