@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './NovoAgendamento.css';
 
 function NovoAgendamento() {
   const [clientes, setClientes] = useState([]);
