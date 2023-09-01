@@ -30,6 +30,9 @@ const LoginPage = () => {
         <li> 
           <Link to="/Barbeiros">Barbeiros</Link>
         </li>
+        <li>
+          <Link to="/NovoAgendamento">Agendamentos</Link>
+        </li>
       </ul>
       
       
