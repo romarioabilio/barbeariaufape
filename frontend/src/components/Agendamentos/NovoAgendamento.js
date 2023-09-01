@@ -130,7 +130,7 @@ function NovoAgendamento() {
             onChange={e => setObservacao(e.target.value)}
           />
         </div>
-        <button type="submit">Criar Agendamento</button>
+        <button type="submit" className='btn btn-primary'>Criar Agendamento</button>
       </form>
     </div>
   );
