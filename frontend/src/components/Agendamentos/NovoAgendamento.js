@@ -23,6 +23,9 @@ function NovoAgendamento() {
   const [data, setData] = useState('');
   const [hora, setHora] = useState('');
   const [observacao, setObservacao] = useState('');
+  const [btnCadastrarAgendamento, setBtnCadastrarAgendamento] = useState(true);
+  const [modoEdicao, setModoEdicao] = useState(true);
+ 
 
   useEffect(() => {
     axios.get('http://localhost:8080/listarCliente')
@@ -75,7 +78,6 @@ function NovoAgendamento() {
     }
   };
 
-  const [btnCadastrarAgendamento, setBtnCadastrarAgendamento] = useState(true);
 
   const limparFormulario = () => {
     setCliente('');
@@ -84,12 +86,34 @@ function NovoAgendamento() {
     setData('');
     setHora('');
     setObservacao('');
+    setModoEdicao(true);
     setBtnCadastrarAgendamento(true);
   };
-
-  const selecionarAgendamento = (indice) => {
-    setAgendamentoAtual(agendamentos[indice]);
+  const cancelar = () => {
+    setCliente('');
+    setBarbeiro('');
+    setServicosSelecionados([]);
+    setData('');
+    setHora('');
+    setObservacao('');
+    setModoEdicao(true);
     setBtnCadastrarAgendamento(false);
+  }
+ 
+  const selecionarAgendamento = (indice) => {
+    const agendamentoSelecionado = agendamentos[indice];
+    setAgendamentoAtual(agendamentoSelecionado); // Set the entire appointment object
+    setCliente(agendamentoSelecionado.cliente.id);
+    setBarbeiro(agendamentoSelecionado.barbeiro.id);
+    setServicosSelecionados(agendamentoSelecionado.servicos.map((servico) => servico.id));
+    setData(agendamentoSelecionado.data);
+    setHora(agendamentoSelecionado.hora);
+    
+   
+  setObservacao(agendamentoSelecionado.observacao);
+    
+    
+  setModoEdicao(false);
   };
 
   const handleSubmit = e => {
@@ -127,6 +151,70 @@ function NovoAgendamento() {
         console.error(error);
       });
   };
+
+  const handleDeletarAgendamento = () => {
+    if (!agendamentoAtual.id) {
+      return; // Certifique-se de que o agendamento atual tenha um ID
+    }
+    
+    axios
+      .delete(`http://localhost:8080/deletarAgendamentoId/${agendamentoAtual.id}`)
+      .then((response) => {
+        console.log(response.data);
+        // Atualize a lista de agendamentos após a exclusão
+        fetch('http://localhost:8080/listarAgendamentos')
+          .then((retorno) => retorno.json())
+          .then((retorno_convertido) => {
+            setAgendamentos(retorno_convertido);
+            limparFormulario();
+            setModoEdicao(true);
+          })
+          .catch((error) => {
+            console.error('Erro ao buscar lista de agendamentos:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Erro ao excluir agendamento:', error);
+      });
+  };
+  
+  const handleAtualizarAgendamento = () => {
+    if (!cliente || !barbeiro || servicosSelecionados.length === 0 || !agendamentoAtual.id) {
+      return; // Certifique-se de que os três itens foram selecionados e que o agendamento atual tenha um ID
+    }
+  
+    const updatedAgendamento = {
+      id: agendamentoAtual.id,
+      cliente: { id: Number(cliente) },
+      barbeiro: { id: Number(barbeiro) },
+      servicos: servicosSelecionados.map(id => ({ id })),
+      data,
+      hora,
+      observacao,
+    };
+  
+    axios
+  .put(`http://localhost:8080/atualizarAgendamentoId/${agendamentoAtual.id}`, updatedAgendamento)
+  .then((response) => {
+    console.log(response.data);
+    
+   
+fetch('http://localhost:8080/listarAgendamentos')
+      .then((retorno) => retorno.json())
+      .then((retorno_convertido) => {
+        setAgendamentos(retorno_convertido);
+        limparFormulario();
+        setModoEdicao(false);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar lista de agendamentos:', error);
+      });
+  })
+  .catch((error) => {
+    console.error('Erro ao atualizar agendamento:', error); // Exiba informações detalhadas sobre o erro.
+  });
+  }
+  
   return (
     <div>
       <h2>Novo Agendamento</h2>
@@ -203,7 +291,19 @@ function NovoAgendamento() {
             onChange={e => setObservacao(e.target.value)}
           />
         </div>
-        <button type="submit" className='btn btn-primary'>Criar Agendamento</button>
+        
+        {
+                modoEdicao
+                ?
+                <button type="submit" className='btn btn-primary'>Criar Agendamento</button>
+                :
+                <div>
+                    <input type="button" value='Alterar' className='btn btn-warning' onClick={handleAtualizarAgendamento}  />
+                    <input type="button" value="Remover" className='btn btn-danger' onClick={handleDeletarAgendamento} />
+                    <input type="button" value="Cancelar" className='btn btn-secondary' onClick={cancelar}/>
+                    <input type="button" value="Concluído" className='btn btn-success' onClick={handleDeletarAgendamento} />
+                </div>
+            }
       </form>
       <TabelaAgendamento vetor={agendamentos} selecionar={selecionarAgendamento} />
     </div>
