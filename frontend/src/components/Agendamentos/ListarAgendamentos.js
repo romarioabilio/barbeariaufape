@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './NovoAgendamento.css';
-import TabelaAgendamento from './TabelaAgendamento';
+import TabelaListar from './TabelaListar';
 
-function NovoAgendamento() {
+function ListarAgendamentos() {
   const agendamentoInicial = {
     cliente: {},
     barbeiro: {},
@@ -129,85 +129,9 @@ function NovoAgendamento() {
   };
   return (
     <div>
-      <h2>Novo Agendamento</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="column">
-          <h3>Selecionar Cliente</h3>
-          <select
-            placeholder="Cliente"
-            value={cliente}
-            onChange={e => setCliente(e.target.value)}
-          >
-            {clientes.map(cliente => (
-              <option key={cliente.id} value={cliente.id} >
-                {cliente.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="column">
-          <h3>Selecionar Barbeiro</h3>
-          <select
-            placeholder="Barbeiro"
-            value={barbeiro}
-            onChange={e => setBarbeiro(e.target.value)}
-          >
-            {barbeiros.map(barbeiro => (
-              <option key={barbeiro.id} value={barbeiro.id}>
-                {barbeiro.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="column">
-          <details>
-            <summary>Selecionar Serviços</summary>
-            {servicos.map((servico) => (
-              <label key={servico.id} className="select-option">
-                <input
-                  type="checkbox"
-                  value={servico.id}
-                  checked={servicosSelecionados.some((s) => s.id === servico.id)}
-                  onChange={handleServicoSelection}
-                />
-                {servico.nome}
-              </label>
-            ))}
-          </details>
-        </div>
-        <div className="column">
-          <h3>Data</h3>
-          <input
-            type="text"
-            placeholder="Data"
-            value={data}
-            onChange={e => setData(e.target.value)}
-          />
-        </div>
-
-        <div className="column">
-          <h3>Hora</h3>
-          <input
-            type="text"
-            placeholder="Hora"
-            value={hora}
-            onChange={e => setHora(e.target.value)}
-          />
-        </div>
-        <div className="column">
-          <h3>Observação</h3>
-          <input
-            type="text"
-            placeholder="Observação"
-            value={observacao}
-            onChange={e => setObservacao(e.target.value)}
-          />
-        </div>
-        <button type="submit" className='btn btn-primary'>Criar Agendamento</button>
-      </form>
-      <TabelaAgendamento vetor={agendamentos} selecionar={selecionarAgendamento} />
+      <TabelaListar vetor={agendamentos} selecionar={selecionarAgendamento} />
     </div>
   );
 }
 
-export default NovoAgendamento;
+export default ListarAgendamentos;

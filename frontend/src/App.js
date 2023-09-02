@@ -6,11 +6,8 @@ import ServicoPage from './pages/ServicoPage';
 import ClientePage from './pages/ClientePage';
 import LoginPage from './pages/LoginPage';
 import BarbeiroPage from './pages/BarbeiroPage';
-
-import AgendamentoPage from './pages/AgendamentoPage';
 import NovoAgendamento from './components/Agendamentos/NovoAgendamento';
-import TabelaAgendamento from './components/Agendamentos/TabelaAgendamento';
-
+import ListarAgendamentos from './components/Agendamentos/ListarAgendamentos';
 
 function App() {
   return (
@@ -23,7 +20,7 @@ function App() {
           <Route path="/Clientes" element={<ClientePage />} />
           <Route path="/Barbeiros" element={<BarbeiroPage />} />
           <Route path="/NovoAgendamento" element={<NovoAgendamento />} />
-          <Route path="/TabelaAgendamento" element={<TabelaAgendamento />} />
+          <Route path="/ListarAgendamentos" element={<ListarAgendamentos />} />
         </Routes>
       </div>
     </BrowserRouter>

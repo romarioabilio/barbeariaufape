@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TabelaAgendamento({ vetor, selecionar }) {
+function TabelaListar({ vetor, selecionar }) {
   return (
     <div>
       <h2>Lista de Agendamentos</h2>
@@ -60,4 +60,4 @@ function TabelaAgendamento({ vetor, selecionar }) {
   );
 }
 
-export default TabelaAgendamento;
+export default TabelaListar;
