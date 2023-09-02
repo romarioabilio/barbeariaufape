@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './NovoAgendamento.css';
 
 function TabelaAgendamento({ vetor, selecionar }) {
   return (
     <div>
-      <h2>Lista de Agendamentos</h2>
       <table className="table">
         <thead>
           <tr>
@@ -56,6 +57,11 @@ function TabelaAgendamento({ vetor, selecionar }) {
             ))}
         </tbody>
       </table>
+      <div className='Botao'>
+        <button>
+          <Link to="/">Ir para a página inicial</Link>
+        </button>
+        </div>
     </div>
   );
 }

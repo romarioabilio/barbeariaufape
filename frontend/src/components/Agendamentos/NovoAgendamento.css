@@ -62,3 +62,8 @@ select[multiple] option.selected {
 select[multiple] option.selected {
   color: #007bff;
 }
+
+div.Botao{
+  text-align:center;
+  justify-content: center;
+}

@@ -1,9 +1,34 @@
-import React from 'react';
+import  { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function TabelaListar({ vetor, selecionar }) {
+  const [filtroNomeBarbeiro, setFiltroNomeBarbeiro] = useState('');
+
+  const filtrarAgendamentos = () => {
+    return vetor.filter(agendamento => {
+      if (!filtroNomeBarbeiro) return true; // Retorna todos se nenhum filtro estiver definido
+      return (
+        agendamento.barbeiro &&
+        agendamento.barbeiro.nome.toLowerCase().includes(filtroNomeBarbeiro.toLowerCase())
+      );
+    });
+  };
+  
   return (
     <div>
-      <h2>Lista de Agendamentos</h2>
+    <h2>Lista de Agendamentos</h2>
+    
+    {/* Campo de pesquisa por nome de barbeiro */}
+    <div className="mb-3">
+      <label htmlFor="nomeBarbeiro">Pesquisar por Nome de Barbeiro:</label>
+      <input
+        type="text"
+        id="nomeBarbeiro"
+        className="form-control"
+        value={filtroNomeBarbeiro}
+        onChange={(e) => setFiltroNomeBarbeiro(e.target.value)}
+      />
+    </div>
       <table className="table">
         <thead>
           <tr>
@@ -19,8 +44,8 @@ function TabelaListar({ vetor, selecionar }) {
           </tr>
         </thead>
         <tbody>
-          {vetor &&
-            vetor.map((agendamento, indice) => (
+          
+            {filtrarAgendamentos().map((agendamento, indice) => (
               <tr key={agendamento.id}>
                 <td>{indice + 1}</td>
                 <td>{agendamento.cliente ? agendamento.cliente.nome : ''}</td>
@@ -56,6 +81,11 @@ function TabelaListar({ vetor, selecionar }) {
             ))}
         </tbody>
       </table>
+      <div className='Botao'>
+        <button>
+          <Link to="/">Ir para a página inicial</Link>
+        </button>
+        </div>
     </div>
   );
 }
