@@ -34,6 +34,9 @@ const LoginPage = () => {
           <Link to="/NovoAgendamento"> Realizar Agendamentos</Link>
         </li>
         <li>
+          <Link to="/NovoAtendimento"> Realizar Atendimentos</Link>
+        </li>
+        <li>
           <Link to="/ListarAgendamentos">Agendamentos</Link>
         </li>
       </ul>

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import BarbeiroPage from './pages/BarbeiroPage';
 import NovoAgendamento from './components/Agendamentos/NovoAgendamento';
 import ListarAgendamentos from './components/Agendamentos/ListarAgendamentos';
+import NovoAtendimento from './components/Atendimentos/NovoAtendimento';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/Clientes" element={<ClientePage />} />
           <Route path="/Barbeiros" element={<BarbeiroPage />} />
           <Route path="/NovoAgendamento" element={<NovoAgendamento />} />
+          <Route path="/NovoAtendimento" element={<NovoAtendimento />} />
           <Route path="/ListarAgendamentos" element={<ListarAgendamentos />} />
         </Routes>
       </div>
