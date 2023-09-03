@@ -57,7 +57,9 @@ public class Agendamento implements Serializable {
 
 		if (servicos != null) {
 			for (Servico servico : servicos) {
-				total = total.add(servico.getPreco());
+				if (servico != null && servico.getPreco() != null) {
+					total = total.add(servico.getPreco());
+				}
 			}
 		}
 		return total;

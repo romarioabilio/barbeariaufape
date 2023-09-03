@@ -15,9 +15,9 @@ function NovoAgendamento() {
   const [agendamentos, setAgendamentos] = useState([]);
   const [agendamentoAtual, setAgendamentoAtual] = useState(agendamentoInicial);
   const [clientes, setClientes] = useState([]);
-  const [cliente, setCliente] = useState(0);
+  const [cliente, setCliente] = useState('');
   const [barbeiros, setBarbeiros] = useState([]);
-  const [barbeiro, setBarbeiro] = useState(0);
+  const [barbeiro, setBarbeiro] = useState('');
   const [servicos, setServicos] = useState([]);
   const [servicosSelecionados, setServicosSelecionados] = useState([]);
   const [data, setData] = useState('');
@@ -70,10 +70,8 @@ function NovoAgendamento() {
     const servicoId = Number(e.target.value);
 
     if (e.target.checked) {
-      // Se a caixa de seleção estiver marcada, adiciona o serviço aos selecionados
       setServicosSelecionados([...servicosSelecionados, { id: servicoId }]);
     } else {
-      // Se a caixa de seleção estiver desmarcada, remove o serviço dos selecionados
       setServicosSelecionados(servicosSelecionados.filter((s) => s.id !== servicoId));
     }
   };
@@ -102,7 +100,7 @@ function NovoAgendamento() {
  
   const selecionarAgendamento = (indice) => {
     const agendamentoSelecionado = agendamentos[indice];
-    setAgendamentoAtual(agendamentoSelecionado); // Set the entire appointment object
+    setAgendamentoAtual(agendamentoSelecionado);
     setCliente(agendamentoSelecionado.cliente.id);
     setBarbeiro(agendamentoSelecionado.barbeiro.id);
     setServicosSelecionados(agendamentoSelecionado.servicos.map((servico) => servico.id));
@@ -120,7 +118,7 @@ function NovoAgendamento() {
     e.preventDefault();
 
     if (!cliente || !barbeiro || servicosSelecionados.length === 0) {
-      return; // Certifique-se de que os três itens foram selecionados
+      return; 
     }
 
     const newAgendamento = {
@@ -141,7 +139,7 @@ function NovoAgendamento() {
           .then((retorno) => retorno.json())
           .then((retorno_convertido) => {
             setAgendamentos(retorno_convertido);
-            limparFormulario(); // Mova a chamada aqui para manter a seleção de serviços até que a lista de agendamentos seja atualizada.
+            limparFormulario();
           })
           .catch((error) => {
             console.error(error);
@@ -154,14 +152,13 @@ function NovoAgendamento() {
 
   const handleDeletarAgendamento = () => {
     if (!agendamentoAtual.id) {
-      return; // Certifique-se de que o agendamento atual tenha um ID
+      return;
     }
     
     axios
       .delete(`http://localhost:8080/deletarAgendamentoId/${agendamentoAtual.id}`)
       .then((response) => {
         console.log(response.data);
-        // Atualize a lista de agendamentos após a exclusão
         fetch('http://localhost:8080/listarAgendamentos')
           .then((retorno) => retorno.json())
           .then((retorno_convertido) => {
@@ -180,7 +177,7 @@ function NovoAgendamento() {
   
   const handleAtualizarAgendamento = () => {
     if (!cliente || !barbeiro || servicosSelecionados.length === 0 || !agendamentoAtual.id) {
-      return; // Certifique-se de que os três itens foram selecionados e que o agendamento atual tenha um ID
+      return;
     }
   
     const updatedAgendamento = {
@@ -211,7 +208,7 @@ fetch('http://localhost:8080/listarAgendamentos')
       });
   })
   .catch((error) => {
-    console.error('Erro ao atualizar agendamento:', error); // Exiba informações detalhadas sobre o erro.
+    console.error('Erro ao atualizar agendamento:', error);
   });
   }
   
@@ -291,7 +288,6 @@ fetch('http://localhost:8080/listarAgendamentos')
             onChange={e => setObservacao(e.target.value)}
           />
         </div>
-        
         {
                 modoEdicao
                 ?
