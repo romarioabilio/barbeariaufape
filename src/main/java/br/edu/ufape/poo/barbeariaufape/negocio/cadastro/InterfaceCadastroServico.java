@@ -3,7 +3,7 @@ package br.edu.ufape.poo.barbeariaufape.negocio.cadastro;
 import java.util.List;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
+
 
 public interface InterfaceCadastroServico {
 	

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
 import br.edu.ufape.poo.barbeariaufape.negocio.fachada.Fachada;
 
 @RestController
@@ -22,8 +21,6 @@ import br.edu.ufape.poo.barbeariaufape.negocio.fachada.Fachada;
 public class ServicoController {
 
 	@Autowired
-	
-
 	private Fachada fachada;
 
 	@GetMapping("/listarServicos")

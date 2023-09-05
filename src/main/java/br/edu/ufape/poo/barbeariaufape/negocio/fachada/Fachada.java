@@ -18,9 +18,6 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplic
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoDuplicadoException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoDuplicadoException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ServicoNaoExisteException;
 
 @Service
 public class Fachada {
@@ -73,7 +70,7 @@ public class Fachada {
     public Produto procurarProduto(Long id) {
         return cadastroProduto.procurarProduto(id);
     }
-    public Produto salvarProduto(Produto entity) throws  ProdutoDuplicadoException{
+    public Produto salvarProduto(Produto entity) {
         return cadastroProduto.salvarProduto(entity);
     }
     public List<Produto> listarProdutos(){
