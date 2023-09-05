@@ -10,7 +10,14 @@ const HomePage = () => {
     <nav>
         <h1>Barbearia UFAPE</h1>
         
-      <ul>
+   
+    </nav>
+
+    <div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+
+      <ul className='links'>
         <li>
           <Link to="/Produtos">Produtos</Link>
         </li>
@@ -30,9 +37,7 @@ const HomePage = () => {
           <Link to="/Atendimentos">Atendimentos</Link>
         </li>
       </ul>
-      
-      
-    </nav>
+    </div>
   
     <footer className="rodape">
         <div className="contact-info">

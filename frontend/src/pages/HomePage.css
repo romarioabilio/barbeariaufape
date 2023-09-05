@@ -57,6 +57,7 @@ nav {
   }
 
   footer {
+    font-size: 20px;
     background-color: #fff;
     color: black;
     text-align: center;
@@ -65,5 +66,9 @@ nav {
     bottom: 0;
     width: 100%;
   }
+
   
+  .links{
+    font-size: 35px;
+  }
 

@@ -3,7 +3,20 @@ import { useState, useEffect } from 'react';
 
 
 function TabelaServico ({vetor,selecionar}){
+  const [termoPesquisa, setTermoPesquisa] = useState('');
+
+  const filtroServico = vetor.filter((servico) =>
+    servico.nome.toLowerCase().includes(termoPesquisa.toLowerCase())
+  );
   return (
+    <div>
+      <input
+        type="text"
+        value={termoPesquisa}
+        onChange={(e) => setTermoPesquisa(e.target.value)}
+        placeholder="Pesquisar por nome"
+        className="form-control mb-3"
+      />
         <table className='table'>
             <thead>
                 <tr>
@@ -16,7 +29,7 @@ function TabelaServico ({vetor,selecionar}){
             </thead>
             <tbody>
               {
-                vetor.map((obj,indice)=>(
+                filtroServico.map((obj,indice)=>(
 
                     <tr key={indice}>
                         <td>{indice+1}</td>
@@ -29,6 +42,7 @@ function TabelaServico ({vetor,selecionar}){
               }
             </tbody>
         </table>
+        </div>
     
   )
 }
