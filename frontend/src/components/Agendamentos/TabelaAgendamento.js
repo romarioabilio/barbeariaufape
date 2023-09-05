@@ -57,7 +57,7 @@ function TabelaAgendamento({ vetor, selecionar }) {
             ))}
         </tbody>
       </table>
-      <div className='Botao'>
+      <div>
         <button>
           <Link to="/">Ir para a página inicial</Link>
         </button>

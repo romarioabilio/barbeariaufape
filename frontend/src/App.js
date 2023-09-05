@@ -4,10 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProdutoPage from './pages/ProdutoPage';
 import ServicoPage from './pages/ServicoPage';
 import ClientePage from './pages/ClientePage';
-import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 import BarbeiroPage from './pages/BarbeiroPage';
 import NovoAgendamento from './components/Agendamentos/NovoAgendamento';
-import ListarAgendamentos from './components/Agendamentos/ListarAgendamentos';
 import NovoAtendimento from './components/Atendimentos/NovoAtendimento';
 
 function App() {
@@ -15,14 +14,14 @@ function App() {
     <BrowserRouter>
       <div>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/Servicos" element={<ServicoPage />} />
           <Route path="/Produtos" element={<ProdutoPage />} />
           <Route path="/Clientes" element={<ClientePage />} />
           <Route path="/Barbeiros" element={<BarbeiroPage />} />
-          <Route path="/NovoAgendamento" element={<NovoAgendamento />} />
-          <Route path="/NovoAtendimento" element={<NovoAtendimento />} />
-          <Route path="/ListarAgendamentos" element={<ListarAgendamentos />} />
+          <Route path="/Agendamento" element={<NovoAgendamento />} />
+          <Route path="/Atendimento" element={<NovoAtendimento />} />
+         
         </Routes>
       </div>
     </BrowserRouter>
