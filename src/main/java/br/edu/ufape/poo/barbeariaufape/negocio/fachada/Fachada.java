@@ -36,7 +36,9 @@ public class Fachada {
     @Autowired
     private InterfaceCadastroCliente cadastroCliente;
 
-	public Servico salvarServico(Servico entity) throws ServicoDuplicadoException{
+    //SERVIÇOS
+
+	public Servico salvarServico(Servico entity) {
         return cadastroServico.salvarServico(entity);
     }
    
@@ -44,21 +46,29 @@ public class Fachada {
         return cadastroServico.listarServicos();
     }
 
-	public boolean verificarExistenciaServicoId(Long id) throws ServicoNaoExisteException{
+	public boolean verificarExistenciaServicoId(Long id) {
         return cadastroServico.verificarExistenciaServicoId(id);
     }
 
-	public Servico localizarServicoId(Long id) throws ServicoNaoExisteException{
+	public Servico localizarServicoId(Long id){
         return cadastroServico.localizarServicoId(id);
     }
 
-	/*public void removerServicoNome(String nome){
-        cadastroServico.removerServicoNome(nome);
-    }*/
-     public Servico atualizarServico(Servico servico) throws ServicoNaoExisteException {
+	
+     public Servico atualizarServico(Servico servico) {
         return cadastroServico.atualizarServico(servico);
     }
 
+    public Servico procurarServico(Long id) {
+        return cadastroServico.procurarServico(id);
+    }
+
+    public void removerServico(Long id) {
+        cadastroServico.removerServico(id);
+    }
+
+
+    //PRODUTOS
 
     public Produto procurarProduto(Long id) {
         return cadastroProduto.procurarProduto(id);
@@ -81,6 +91,10 @@ public class Fachada {
     public  Produto atualizarProduto(Produto produto){
         return cadastroProduto.atualizarProduto(produto);
     }
+
+
+
+    //BARBEIROS
 
     public Barbeiro salvarBarbeiro(Barbeiro barbeiro) throws BarbeiroDuplicadoException{
         return cadastroBarbeiro.salvarBarbeiro(barbeiro);
@@ -109,6 +123,8 @@ public class Fachada {
     public List<Barbeiro> listarBarbeiros(){
         return cadastroBarbeiro.listarBarbeiros();
     }
+
+    //CLIENTES
 
     public List<Cliente> procurarClienteNome(String nome) throws ClienteNaoExisteException{
         return cadastroCliente.procurarClienteNome(nome);
@@ -145,4 +161,15 @@ public class Fachada {
 	public Cliente procurarClienteEmail(String email) throws ClienteNaoExisteException {
         return cadastroCliente.procurarClienteEmail(email);
     }
+
+
+
+    //AGENDAMENTOS
+
+
+
+
+
+
+    //ATENDIMENTOS
 }

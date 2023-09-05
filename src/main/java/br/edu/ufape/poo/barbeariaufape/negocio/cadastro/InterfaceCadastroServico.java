@@ -10,7 +10,7 @@ public interface InterfaceCadastroServico {
 	Servico procurarServico(Long id);
 	Servico salvarServico(Servico entity);
 	List<Servico> listarServicos();
-	boolean verificarExistenciaServicoId(Long id) throws ServicoNaoExisteException;
+	boolean verificarExistenciaServicoId(Long id) ;
 	Servico localizarServicoId(Long id);
 	void removerServico(Long id);
 	Servico atualizarServico(Servico servico);

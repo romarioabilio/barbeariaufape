@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
+import br.edu.ufape.poo.barbeariaufape.negocio.fachada.Fachada;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,40 +22,42 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.CadastroServico;
 public class ServicoController {
 
 	@Autowired
-	private CadastroServico servicoService;
+	
+
+	private Fachada fachada;
 
 	@GetMapping("/listarServicos")
 	public List<Servico> listarServicos() {
-		return servicoService.listarServicos();
+		return fachada.listarServicos();
 	}
 
 	@PutMapping("/atualizarServico")
     public Servico atualizarServico(@RequestBody Servico servico) {
-		return servicoService.atualizarServico(servico);
+		return fachada.atualizarServico(servico);
     }
 	
 	@GetMapping("/verificarExistenciaServicoId/{id}")
 	public boolean verificarExistenciaServicoId(@PathVariable Long id) {
-		return servicoService.verificarExistenciaServicoId(id);
+		return fachada.verificarExistenciaServicoId(id);
 	}
 	
 	@GetMapping("/localizarServicoId/{id}")
 	public Servico localizarServicoId(@PathVariable Long id) {
-		return servicoService.localizarServicoId(id);
+		return fachada.localizarServicoId(id);
 	}
 	
 	@GetMapping("/procurarServico/{id}")
 	public Servico procurarServico(@PathVariable Long id) {
-		return servicoService.procurarServico(id);
+		return fachada.procurarServico(id);
 	}
 	
 	@PostMapping("/salvarServico")
 	public Servico salvarServico(@RequestBody Servico servico) {
-		return servicoService.salvarServico(servico);
+		return fachada.salvarServico(servico);
 	}
 	
 	@DeleteMapping("/removerServico/{id}")
 	public void removerServico(@PathVariable long id) {
-		servicoService.removerServico(id);
+		fachada.removerServico(id);
 	}
 }
