@@ -14,9 +14,7 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroServico
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroBarbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroCliente;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteDuplicadoException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteNaoExisteException;
 
 @Service
@@ -123,11 +121,11 @@ public class Fachada {
 
     //CLIENTES
 
-    public List<Cliente> procurarClienteNome(String nome) throws ClienteNaoExisteException{
+    public List<Cliente> procurarClienteNome(String nome) {
         return cadastroCliente.procurarClienteNome(nome);
     }
 
-	public Cliente procurarClienteId(long id) throws ClienteNaoExisteException{
+	public Cliente procurarClienteId(long id) {
         return cadastroCliente.procurarClienteId(id);
     }
 
@@ -135,19 +133,19 @@ public class Fachada {
         return cadastroCliente.listarClientes();
     }
 
-	public void deletarClienteId(Long id) throws ClienteNaoExisteException{
+	public void deletarClienteId(Long id) {
         cadastroCliente.deletarClienteId(id);
     }
 
-	public Cliente salvarCliente(Cliente cliente) throws ClienteDuplicadoException{
+	public Cliente salvarCliente(Cliente cliente) {
         return cadastroCliente.salvarCliente(cliente);
     }
 
-	public void deletarCliente(Cliente cliente) throws ClienteNaoExisteException{
+	public void deletarCliente(Cliente cliente) {
         cadastroCliente.deletarCliente(cliente);
     }
 
-    public Cliente atualizarCliente(Cliente cliente) throws ClienteNaoExisteException{
+    public Cliente atualizarCliente(Cliente cliente) {
         return cadastroCliente.atualizarCliente(cliente);
     }
 

@@ -3,23 +3,23 @@ package br.edu.ufape.poo.barbeariaufape.negocio.cadastro;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Cliente;
 import java.util.List;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteNaoExisteException;
-import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteDuplicadoException;
+
 
 public interface InterfaceCadastroCliente {
 
-	List<Cliente> procurarClienteNome(String nome) throws ClienteNaoExisteException;
+	List<Cliente> procurarClienteNome(String nome) ;
 
-	Cliente procurarClienteId(long id) throws ClienteNaoExisteException;
+	Cliente procurarClienteId(long id) ;
 
 	List<Cliente> listarClientes();
 
-	void deletarClienteId(Long id) throws ClienteNaoExisteException;
+	void deletarClienteId(Long id) ;
 
-	Cliente salvarCliente(Cliente cliente) throws ClienteDuplicadoException;
+	Cliente salvarCliente(Cliente cliente) ;
 
-	void deletarCliente(Cliente cliente) throws ClienteNaoExisteException;
+	void deletarCliente(Cliente cliente) ;
 
-    Cliente atualizarCliente(Cliente cliente) throws ClienteNaoExisteException;
+    Cliente atualizarCliente(Cliente cliente) ;
 
 	void deletarClienteEmail(String email) throws ClienteNaoExisteException;
 
