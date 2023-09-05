@@ -24,20 +24,27 @@ const HomePage = () => {
           <Link to="/Barbeiros">Barbeiros</Link>
         </li>
         <li>
-          <Link to="/Agendamento">Agendamentos</Link>
+          <Link to="/Agendamentos">Agendamentos</Link>
         </li>
         <li>
-          <Link to="/Atendimento">Atendimentos</Link>
+          <Link to="/Atendimentos">Atendimentos</Link>
         </li>
       </ul>
       
       
     </nav>
   
-   
+    <footer className="rodape">
+        <div className="contact-info">
+          <h2>Localização:</h2>
+          <p>Av. Bom Pastor, s/n - Boa Vista, 55292-270</p>
+          <p>Garanhuns - PE</p>
 
-
-
+          <h2>Contato:</h2>
+          <p>Email: info@barbeariaufape.com</p>
+          <p>Telefone: (81) 23456-7890</p>
+        </div>
+      </footer>
     </div>
   );
 }
