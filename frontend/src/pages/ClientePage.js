@@ -31,10 +31,51 @@ const ClientePage = () => {
   }, []);
 
   const aoDigitar = (e) => {
-    setClienteAtual({...clienteAtual, [e.target.name]:e.target.value});
+    if (e.target.name === 'cpf' || e.target.name === 'telefone') {
+      // Remove todos os caracteres não numéricos
+      const valorNumerico = e.target.value.replace(/\D/g, '');
+
+      // Limita o campo a 11 dígitos (CPF, telefone)
+      if (valorNumerico.length > 11) {
+        return;
+      }
+       // Formata CPF com pontos e traços
+       if (e.target.name === 'cpf' && valorNumerico.length === 11) {
+        const cpfFormatado = `${valorNumerico.substring(0, 3)}.${valorNumerico.substring(3, 6)}.${valorNumerico.substring(6, 9)}-${valorNumerico.substring(9)}`;
+        setClienteAtual({ ...clienteAtual, [e.target.name]: cpfFormatado });
+      } else if (e.target.name === 'telefone' && valorNumerico.length >= 10) {
+        const ddd = valorNumerico.substring(0, 2);
+        const primeiroGrupo = valorNumerico.substring(2, 7);
+        const segundoGrupo = valorNumerico.substring(7);
+        const telefoneFormatado = `(${ddd}) ${primeiroGrupo}-${segundoGrupo}`;
+        setClienteAtual({ ...clienteAtual, [e.target.name]: telefoneFormatado });
+      } else {
+        setClienteAtual({ ...clienteAtual, [e.target.name]: valorNumerico });
+      }
+    } else {
+      setClienteAtual({ ...clienteAtual, [e.target.name]: e.target.value });
+    }
   };
   const aoDigitarEndereco = (e) => {
-    setClienteAtual({...clienteAtual, endereco: {...clienteAtual.endereco, [e.target.name]:e.target.value}});
+    if (e.target.name === 'cep') {
+      // Remove todos os caracteres não numéricos
+      const cepNumerico = e.target.value.replace(/\D/g, '');
+
+      // Limita o CEP a 8 dígitos
+      if (cepNumerico.length > 8) {
+        return;
+      }
+
+      // Adiciona o hífen após o quinto dígito
+      let cepFormatado = cepNumerico;
+      if (cepNumerico.length > 5) {
+        cepFormatado = `${cepNumerico.slice(0, 5)}-${cepNumerico.slice(5)}`;
+      }
+
+      setClienteAtual({ ...clienteAtual, endereco: { ...clienteAtual.endereco, cep: cepFormatado } });
+    } else {
+      setClienteAtual({ ...clienteAtual, endereco: { ...clienteAtual.endereco, [e.target.name]: e.target.value } });
+    }
   };
 
   const limparFormulario = () => {
