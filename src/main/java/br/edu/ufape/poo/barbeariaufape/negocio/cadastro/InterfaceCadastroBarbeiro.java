@@ -7,17 +7,17 @@ import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExi
 
 public interface InterfaceCadastroBarbeiro {
     
-    Barbeiro salvarBarbeiro(Barbeiro barbeiro) throws BarbeiroDuplicadoException;
+    Barbeiro salvarBarbeiro(Barbeiro barbeiro);
 
-    List<Barbeiro> procurarBarbeiroNome(String nome) throws BarbeiroNaoExisteException;
+    List<Barbeiro> procurarBarbeiroNome(String nome);
 
-    Barbeiro procurarBarbeiroId(long id) throws BarbeiroNaoExisteException;
+    Barbeiro procurarBarbeiroId(long id);
 
-    void deletarBarbeiroId(Long id) throws BarbeiroNaoExisteException;
+    void deletarBarbeiroId(Long id);
 
     void deletarBarbeiroEmail(String email) throws BarbeiroNaoExisteException;
 
-    Barbeiro atualizarBarbeiro(Barbeiro barbeiro) throws BarbeiroNaoExisteException;
+    Barbeiro atualizarBarbeiro(Barbeiro barbeiro) ;
 
     List<Barbeiro> listarBarbeiros(); 
 

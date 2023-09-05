@@ -93,7 +93,7 @@ public class Fachada {
 
     //BARBEIROS
 
-    public Barbeiro salvarBarbeiro(Barbeiro barbeiro) throws BarbeiroDuplicadoException{
+    public Barbeiro salvarBarbeiro(Barbeiro barbeiro) {
         return cadastroBarbeiro.salvarBarbeiro(barbeiro);
     }
 
@@ -101,11 +101,11 @@ public class Fachada {
         return cadastroBarbeiro.procurarBarbeiroNome(nome);
     }
 
-    public Barbeiro procurarBarbeiroId(long id) throws BarbeiroNaoExisteException{
+    public Barbeiro procurarBarbeiroId(long id) {
         return cadastroBarbeiro.procurarBarbeiroId(id);
     }
     
-    public void deletarBarbeiroId(Long id) throws BarbeiroNaoExisteException{
+    public void deletarBarbeiroId(Long id) {
         cadastroBarbeiro.deletarBarbeiroId(id);
     }
 
@@ -113,7 +113,7 @@ public class Fachada {
         cadastroBarbeiro.deletarBarbeiroEmail(email);
     }
 
-    public Barbeiro atualizarBarbeiro(Barbeiro barbeiro) throws BarbeiroNaoExisteException{
+    public Barbeiro atualizarBarbeiro(Barbeiro barbeiro) {
         return cadastroBarbeiro.atualizarBarbeiro(barbeiro);
     }
 
