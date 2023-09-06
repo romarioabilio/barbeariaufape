@@ -40,7 +40,7 @@ function TabelaAtendimento({ vetor, selecionar }) {
                   {atendimento.produtos &&
                     atendimento.produtos.map((produto, index) => (
                       <span key={produto.id}>
-                        {produto.nome}
+                        {produto.produto.nome}
                         {index < atendimento.produtos.length - 1 && ', '}
                       </span>
                     ))}

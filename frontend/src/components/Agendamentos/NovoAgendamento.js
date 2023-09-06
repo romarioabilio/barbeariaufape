@@ -15,9 +15,9 @@ function NovoAgendamento() {
   const [agendamentos, setAgendamentos] = useState([]);
   const [agendamentoAtual, setAgendamentoAtual] = useState(agendamentoInicial);
   const [clientes, setClientes] = useState([]);
-  const [cliente, setCliente] = useState('');
+  const [cliente, setCliente] = useState(0);
   const [barbeiros, setBarbeiros] = useState([]);
-  const [barbeiro, setBarbeiro] = useState('');
+  const [barbeiro, setBarbeiro] = useState(0);
   const [servicos, setServicos] = useState([]);
   const [servicosSelecionados, setServicosSelecionados] = useState([]);
   const [data, setData] = useState('');
@@ -223,6 +223,7 @@ fetch('http://localhost:8080/listarAgendamentos')
             value={cliente}
             onChange={e => setCliente(e.target.value)}
           >
+            <option value="0" disabled> Selecione uma opção</option>
             {clientes.map(cliente => (
               <option key={cliente.id} value={cliente.id} >
                 {cliente.nome}
@@ -237,6 +238,7 @@ fetch('http://localhost:8080/listarAgendamentos')
             value={barbeiro}
             onChange={e => setBarbeiro(e.target.value)}
           >
+            <option value="0" disabled> Selecione uma opção</option>
             {barbeiros.map(barbeiro => (
               <option key={barbeiro.id} value={barbeiro.id}>
                 {barbeiro.nome}

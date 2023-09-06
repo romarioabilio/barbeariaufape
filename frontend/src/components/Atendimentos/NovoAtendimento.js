@@ -4,17 +4,18 @@ import './NovoAtendimento.css';
 import TabelaAtendimento from './TabelaAtendimento';
 
 function NovoAtendimento() {
-    const atendimentoInicial = {
+    const [atendimentos, setAtendimentos] = useState([]);
+    const [atendimentoAtual, setAtendimentoAtual] = useState({
         data: '',
         hora: '',
-        cliente: {},
-        barbeiro: {},
+        cliente: 0,
+        barbeiro: 0,
         servicos: [],
-        produtos: [],
+        item: {
+            produtos: []
+        },
         pagamento: '',
-    };
-    const [atendimentos, setAtendimentos] = useState([]);
-    const [atendimentoAtual, setAtendimentoAtual] = useState(atendimentoInicial);
+    });
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
     const [clientes, setClientes] = useState([]);
@@ -27,6 +28,7 @@ function NovoAtendimento() {
     const [produtosSelecionados, setProdutosSelecionados] = useState([]);
     const [pagamento, setPagamento] = useState('');
     const [btnCadastrarAtendimento, setBtnCadastrarAtendimento] = useState(true);
+    const [quantidadeProduto, setQuantidadeProduto] = useState(1);
     const [modoEdicao, setModoEdicao] = useState(true);
 
     useEffect(() => {
@@ -78,27 +80,107 @@ function NovoAtendimento() {
 
     const handleServicoSelection = (e) => {
         const servicoId = Number(e.target.value);
-
         if (e.target.checked) {
-            // Se a caixa de seleção estiver marcada, adiciona o serviço aos selecionados
             setServicosSelecionados([...servicosSelecionados, { id: servicoId }]);
         } else {
-            // Se a caixa de seleção estiver desmarcada, remove o serviço dos selecionados
             setServicosSelecionados(servicosSelecionados.filter((s) => s.id !== servicoId));
         }
     };
 
     const handleProdutoSelection = (e) => {
         const produtoId = Number(e.target.value);
+        const isChecked = e.target.checked;
+        const produto = produtos.find((p) => p.id === produtoId);
 
-        if (e.target.checked) {
-            // Se a caixa de seleção estiver marcada, adiciona o serviço aos selecionados
-            setProdutosSelecionados([...produtosSelecionados, { id: produtoId }]);
+        if (isChecked) {
+            const quantidade = 1;
+            const valorTotalProduto = produto.preco * quantidade;
+
+            setProdutosSelecionados([
+                ...produtosSelecionados,
+                { id: produtoId, quantidade: quantidade, valorTotal: valorTotalProduto },
+            ]);
+
+            setAtendimentoAtual((atendimentoAtual) => ({
+                ...atendimentoAtual,
+                total: atendimentoAtual.total + valorTotalProduto,
+            }));
         } else {
-            // Se a caixa de seleção estiver desmarcada, remove o serviço dos selecionados
-            setProdutosSelecionados(produtosSelecionados.filter((p) => p.id !== produtoId));
+            const produtoSelecionado = produtosSelecionados.find((p) => p.id === produtoId);
+            if (produtoSelecionado) {
+                const valorTotalProduto = produtoSelecionado.valorTotal;
+                setProdutosSelecionados(produtosSelecionados.filter((p) => p.id !== produtoId));
+                setAtendimentoAtual((atendimentoAtual) => ({
+                    ...atendimentoAtual,
+                    total: atendimentoAtual.total - valorTotalProduto,
+                }));
+            }
         }
     };
+
+    const adicionarProduto = (produto, quantidade) => {
+        if (produto !== null && quantidade > 0) {
+            const newItem = { ...atendimentoAtual.item };
+            newItem.produtos.push({ produto, quantidade });
+            setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
+            // Atualizar o total do atendimento com base no novo item
+            recalcularTotal();
+        } else {
+            throw new Error("Produto ou quantidade inválida.");
+        }
+    };
+
+    const removerProduto = (index) => {
+        const newItem = { ...atendimentoAtual.item };
+        newItem.produtos.splice(index, 1);
+        setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
+        // Atualizar o total do atendimento com base no novo item
+        recalcularTotal();
+    };
+
+    const atualizarQuantidadeProduto = (index, novaQuantidade) => {
+        novaQuantidade = parseInt(novaQuantidade, 10);
+        if (!isNaN(novaQuantidade)) {
+            const newItem = { ...atendimentoAtual.item };
+            newItem.produtos[index].quantidade = novaQuantidade;
+            setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
+            // Atualizar o total do atendimento com base no novo item
+            recalcularTotal();
+        }
+    };
+
+    const recalcularTotal = () => {
+        const total = atendimentoAtual.item.produtos.reduce((acc, item) => {
+            return acc + item.produto.preco * item.quantidade;
+        }, 0);
+        setAtendimentoAtual({ ...atendimentoAtual, total });
+    };
+
+    const handleQuantidadeProdutoChange = (produtoId, novaQuantidade) => {
+        novaQuantidade = parseInt(novaQuantidade, 10);
+        if (!isNaN(novaQuantidade)) {
+            setProdutosSelecionados((produtosSelecionados) =>
+                produtosSelecionados.map((produtoSelecionado) =>
+                    produtoSelecionado.id === produtoId
+                        ? { ...produtoSelecionado, quantidade: novaQuantidade }
+                        : produtoSelecionado
+                )
+            );
+    
+            // Atualize o valor total do produto no atendimento
+            const produtoSelecionado = produtosSelecionados.find((p) => p.id === produtoId);
+            if (produtoSelecionado) {
+                const valorTotalProduto = produtoSelecionado.preco * novaQuantidade;
+                setAtendimentoAtual((atendimentoAtual) => ({
+                    ...atendimentoAtual,
+                    total: atendimentoAtual.total - produtoSelecionado.valorTotal + valorTotalProduto,
+                }));
+            }
+        }
+    };
+
+
+
 
     const limparFormulario = () => {
         setData('');
@@ -140,7 +222,7 @@ function NovoAtendimento() {
         e.preventDefault();
 
         if (!cliente || !barbeiro || servicosSelecionados.length === 0 || produtosSelecionados.length === 0) {
-            return; // Certifique-se de que os quatros itens foram selecionados
+            return;
         }
 
         const newAtendimento = {
@@ -149,7 +231,10 @@ function NovoAtendimento() {
             cliente: { id: Number(cliente) },
             barbeiro: { id: Number(barbeiro) },
             servicos: servicosSelecionados,
-            produtos: produtosSelecionados,
+            produtos: produtosSelecionados.map((produtoSelecionado) => ({
+                id: produtoSelecionado.id,
+                quantidade: produtoSelecionado.quantidade,
+            })),
             pagamento,
         };
 
@@ -199,42 +284,29 @@ function NovoAtendimento() {
     };
 
     const handleAtualizarAtendimento = () => {
-        if (!cliente || !barbeiro || servicosSelecionados.length === 0 || !atendimentoAtual.id) {
-          return;
+        if (!cliente || !barbeiro || servicosSelecionados.length === 0 || produtosSelecionados.length === 0 ||  !atendimentoAtual.id) {
+            return;
         }
-      
-        const updatedAtendimento = {
-          id: atendimentoAtual.id,
-          data,
-          hora,
-          cliente: { id: Number(cliente) },
-          barbeiro: { id: Number(barbeiro) },
-          servicos: servicosSelecionados,
-          produtos: produtosSelecionados,
-          pagamento,
-        };
-      
         axios
-          .put(`http://localhost:8080/atualizarAtendimentoId/${atendimentoAtual.id}`, updatedAtendimento)
-          .then((response) => {
-            console.log(response.data);
-      
-            fetch('http://localhost:8080/listarAtendimentos')
-              .then((retorno) => retorno.json())
-              .then((retorno_convertido) => {
-                setAtendimentos(retorno_convertido);
-                limparFormulario();
-                setModoEdicao(false);
-              })
-              .catch((error) => {
-                console.error('Erro ao buscar lista de atendimentos:', error);
-              });
-          })
-          .catch((error) => {
-            console.error('Erro ao atualizar atendimento:', error);
-          });
-      };
-      
+            .put(`http://localhost:8080/atualizarAtendimentoId/${atendimentoAtual.id}`, atendimentos)
+            .then((response) => {
+                console.log(response.data);
+
+                fetch('http://localhost:8080/listarAtendimentos')
+                    .then((retorno) => retorno.json())
+                    .then((retorno_convertido) => {
+                        setAtendimentos(retorno_convertido);
+                        limparFormulario();
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao buscar lista de atendimentos:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Erro ao atualizar atendimento:', error);
+            });
+    };
+
     return (
         <div>
             <h2>Novo Atendimento</h2>
@@ -246,6 +318,7 @@ function NovoAtendimento() {
                         value={cliente}
                         onChange={e => setCliente(e.target.value)}
                     >
+                        <option value="0" disabled> Selecione uma opção</option>
                         {clientes.map(cliente => (
                             <option key={cliente.id} value={cliente.id} >
                                 {cliente.nome}
@@ -260,6 +333,7 @@ function NovoAtendimento() {
                         value={barbeiro}
                         onChange={e => setBarbeiro(e.target.value)}
                     >
+                        <option value="0" disabled> Selecione uma opção</option>
                         {barbeiros.map(barbeiro => (
                             <option key={barbeiro.id} value={barbeiro.id}>
                                 {barbeiro.nome}
@@ -299,6 +373,17 @@ function NovoAtendimento() {
                         ))}
                     </details>
                 </div>
+                {produtosSelecionados.map((produtoSelecionado) => (
+                    <div key={produtoSelecionado.id} className="column">
+                        <h3>Quantidade de {produtos.find(p=>p.id == produtoSelecionado.id).nome}</h3>
+                        <input
+                            type="number"
+                            placeholder="Quantidade"
+                            value={produtoSelecionado.quantidade}
+                            onChange={(e) => handleQuantidadeProdutoChange(produtoSelecionado.id, e.target.value)}
+                        />
+                    </div>
+                ))}
                 <div className="column">
                     <h3>Data</h3>
                     <input
