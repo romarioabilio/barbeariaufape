@@ -22,24 +22,22 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Entity
-public class Atendimento implements Serializable{
+public class Atendimento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	@NonNull
+    @NonNull
     private LocalDate data;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
@@ -54,72 +52,72 @@ public class Atendimento implements Serializable{
         this.hora = hora;
         this.barbeiro = barbeiro;
         this.cliente = cliente;
-        this.total = BigDecimal.ZERO; // Inicialize o campo total
+        this.total = BigDecimal.ZERO;
     }
-    
+
     private String pagamento;
-    
+
     @ManyToOne
     @NonNull
     private Barbeiro barbeiro;
-    
+
     @ManyToOne
     @NonNull
     private Cliente cliente;
 
-    
     @ManyToMany
-	@JoinTable(name = "tb_atendimento_servico", joinColumns = @JoinColumn(name = "atendimento_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
-	private Set<Servico> servicos = new HashSet<>();
-    
+    @JoinTable(name = "tb_atendimento_servico", joinColumns = @JoinColumn(name = "atendimento_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
+    private Set<Servico> servicos = new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "tb_atendimento_produto", joinColumns = @JoinColumn(name = "atendimento_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-    private Set<Produto> produtos = new HashSet<>();
-    
+    private Set<Item> produtos = new HashSet<>();
+
     public void adicionarServico(Servico servico) {
         servicos.add(servico);
-        total = total.add(servico.getPreco()); // Atualiza o total
-    }
-    
-    public void adicionarProduto(Produto produto) {
-        produtos.add(produto);
-        total = total.add(produto.getPreco()); // Atualiza o total
+        total = total.add(servico.getPreco()); 
     }
 
-    public BigDecimal getTotal() {
-        total = BigDecimal.ZERO; // Inicialize o total
-        if (servicos != null) {
-            for (Servico servico : servicos) {
-                if (servico.getPreco() != null) {
-                    total = total.add(servico.getPreco());
-                }
+    public void adicionarProduto(Produto produto, BigDecimal quantidade) {
+        if (produto != null && quantidade.compareTo(BigDecimal.ZERO) > 0) {
+            if (produto.getQuantidade().compareTo(quantidade) >= 0) {
+                produtos.add(new Item(produto.getId(), quantidade));
+                produto.setQuantidade(produto.getQuantidade().subtract(quantidade));
+                recalcularTotal();
+            } else {
+                throw new IllegalArgumentException("Produto não disponível em quantidade suficiente.");
             }
+        } else {
+            throw new IllegalArgumentException("Produto ou quantidade inválida.");
         }
-        if (produtos != null) {
-            for (Produto produto : produtos) {
-                if (produto.getPreco() != null) {
-                    total = total.add(produto.getPreco());
-                }
-            }
-        }
-        return total;
     }
     
+    public void recalcularTotal() {
+        total = BigDecimal.ZERO;
+        for (Item produto : produtos) {
+            total = total.add(produto.getPreco().multiply(produto.getQuantidade()));
+        }
+
+        for (Servico servico : servicos) {
+            total = total.add(servico.getPreco());
+        }
+    }
+
     @Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Atendimento other = (Atendimento) obj;
-		return Objects.equals(id, other.id);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Atendimento other = (Atendimento) obj;
+        return Objects.equals(id, other.id);
+    }
 
 }
