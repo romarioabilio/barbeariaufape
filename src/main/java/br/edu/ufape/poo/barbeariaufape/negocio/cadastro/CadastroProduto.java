@@ -13,7 +13,6 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 	@Autowired
 	private InterfaceColecaoProduto colecaoProduto;
 
-	
 	public Produto salvarProduto(Produto entity) {
 		return colecaoProduto.save(entity);
 	}
@@ -47,6 +46,5 @@ public class CadastroProduto implements InterfaceCadastroProduto {
 	public Produto procurarProduto(Long id) {
 		Produto p = colecaoProduto.findById(id).orElse(null);
 		return p;		
-
 	}	
 }
