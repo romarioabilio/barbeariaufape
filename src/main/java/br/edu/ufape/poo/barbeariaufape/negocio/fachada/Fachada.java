@@ -1,5 +1,7 @@
 package br.edu.ufape.poo.barbeariaufape.negocio.fachada;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,14 @@ import br.edu.ufape.poo.barbeariaufape.negocio.basica.Barbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Cliente;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Produto;
 import br.edu.ufape.poo.barbeariaufape.negocio.basica.Servico;
+import br.edu.ufape.poo.barbeariaufape.negocio.basica.Agendamento;
+import br.edu.ufape.poo.barbeariaufape.negocio.basica.Atendimento;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroProduto;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroServico;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroBarbeiro;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroCliente;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroAgendamento;
+import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.InterfaceCadastroAtendimento;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ProdutoNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.BarbeiroNaoExisteException;
 import br.edu.ufape.poo.barbeariaufape.negocio.cadastro.exception.ClienteNaoExisteException;
@@ -30,6 +36,12 @@ public class Fachada {
 
     @Autowired
     private InterfaceCadastroCliente cadastroCliente;
+
+    @Autowired
+    private InterfaceCadastroAgendamento cadastroAgendamento;
+
+    @Autowired
+    private InterfaceCadastroAtendimento cadastroAtendimento;
 
     //SERVIÇOS
 
@@ -161,10 +173,53 @@ public class Fachada {
 
     //AGENDAMENTOS
 
-
+    public List<Agendamento> listarAgendamentos(){
+        return cadastroAgendamento.listarAgendamentos();
+    }
+	public Agendamento cadastrarAgendamento(Agendamento agendamento){
+        return cadastroAgendamento.cadastrarAgendamento(agendamento);
+    }
+	public void deletarAgendamento(Long id){
+        cadastroAgendamento.deletarAgendamento(id);
+    }
+    
+	public Agendamento atualizarAgendamento(Long id, Agendamento agendamento){
+        return cadastroAgendamento.atualizarAgendamento(id, agendamento);
+    }
+	public void atualizarDados(Agendamento novoAgendamento, Agendamento agendamento){
+        cadastroAgendamento.atualizarDados(novoAgendamento, agendamento);
+    }
 
 
 
 
     //ATENDIMENTOS
+    public Atendimento criarNovoAtendimento(LocalDate data, LocalTime hora, Barbeiro barbeiro, Cliente cliente){
+        return cadastroAtendimento.criarNovoAtendimento(data, hora, barbeiro, cliente);
+    }
+    public List<Atendimento> listarAtentimento(){
+        return cadastroAtendimento.listarAtentimento();
+    }
+    public Atendimento encontrarPorId(Long id){
+        return cadastroAtendimento.encontrarPorId(id);
+    }
+    public Atendimento cadastrarAtendimento(Atendimento atendimento){
+        return cadastroAtendimento.cadastrarAtendimento(atendimento);
+    }
+    public void deletarAtendimento(Long id){
+        cadastroAtendimento.deletarAtendimento(id);
+    }
+    public Atendimento atualizarAtendimento(Long id, Atendimento atendimento){
+        return cadastroAtendimento.atualizarAtendimento(id, atendimento);
+    }
+    public void atualizarDados(Atendimento novoAtendimento, Atendimento atendimento){
+        cadastroAtendimento.atualizarDados(novoAtendimento, atendimento);
+    }
+    public void adicionarServico(Atendimento atendimento, Servico servico){
+        cadastroAtendimento.adicionarServico(atendimento, servico);
+    }
+    public void adicionarProduto(Atendimento atendimento, Produto produto){
+        cadastroAtendimento.adicionarProduto(atendimento, produto);         
+    }
+
 }
