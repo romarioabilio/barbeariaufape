@@ -117,45 +117,6 @@ function NovoAtendimento() {
             }
         }
     };
-
-    const adicionarProduto = (produto, quantidade) => {
-        if (produto !== null && quantidade > 0) {
-            const newItem = { ...atendimentoAtual.item };
-            newItem.produtos.push({ produto, quantidade });
-            setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
-            // Atualizar o total do atendimento com base no novo item
-            recalcularTotal();
-        } else {
-            throw new Error("Produto ou quantidade inválida.");
-        }
-    };
-
-    const removerProduto = (index) => {
-        const newItem = { ...atendimentoAtual.item };
-        newItem.produtos.splice(index, 1);
-        setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
-        // Atualizar o total do atendimento com base no novo item
-        recalcularTotal();
-    };
-
-    const atualizarQuantidadeProduto = (index, novaQuantidade) => {
-        novaQuantidade = parseInt(novaQuantidade, 10);
-        if (!isNaN(novaQuantidade)) {
-            const newItem = { ...atendimentoAtual.item };
-            newItem.produtos[index].quantidade = novaQuantidade;
-            setAtendimentoAtual({ ...atendimentoAtual, item: newItem });
-            // Atualizar o total do atendimento com base no novo item
-            recalcularTotal();
-        }
-    };
-
-    const recalcularTotal = () => {
-        const total = atendimentoAtual.item.produtos.reduce((acc, item) => {
-            return acc + item.produto.preco * item.quantidade;
-        }, 0);
-        setAtendimentoAtual({ ...atendimentoAtual, total });
-    };
-
     const handleQuantidadeProdutoChange = (produtoId, novaQuantidade) => {
         novaQuantidade = parseInt(novaQuantidade, 10);
         if (!isNaN(novaQuantidade)) {
@@ -177,26 +138,24 @@ function NovoAtendimento() {
                 }));
             }
         }
-    };
-
-
-
-
+    };  
+        
     const limparFormulario = () => {
         setData('');
         setHora('');
-        setCliente('');
-        setBarbeiro('');
+        setCliente(0);
+        setBarbeiro(0);
         setServicosSelecionados([]);
         setProdutosSelecionados([]);
         setPagamento('');
+        setModoEdicao(true);
         setBtnCadastrarAtendimento(true);
     };
     const cancelar = () => {
         setData('');
         setHora('');
-        setCliente('');
-        setBarbeiro('');
+        setCliente(0);
+        setBarbeiro(0);
         setServicosSelecionados([]);
         setProdutosSelecionados([]);
         setPagamento('');
@@ -213,7 +172,7 @@ function NovoAtendimento() {
         setCliente(atendimentoSelecionado.cliente.id);
         setBarbeiro(atendimentoSelecionado.barbeiro.id);
         setServicosSelecionados(atendimentoSelecionado.servicos.map((servico) => servico.id));
-        setProdutosSelecionados(atendimentoSelecionado.produtos.map((produto) => produto.id));
+        //setProdutosSelecionados(atendimentoSelecionado.produtos.map((produto) => produto.id));
         setPagamento(atendimentoSelecionado.pagamento);
         setModoEdicao(false);
     };
@@ -221,7 +180,7 @@ function NovoAtendimento() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!cliente || !barbeiro || servicosSelecionados.length === 0 || produtosSelecionados.length === 0) {
+        if (!cliente || !barbeiro || servicosSelecionados.length === 0 && produtosSelecionados.length === 0) {
             return;
         }
 
@@ -284,11 +243,24 @@ function NovoAtendimento() {
     };
 
     const handleAtualizarAtendimento = () => {
-        if (!cliente || !barbeiro || servicosSelecionados.length === 0 || produtosSelecionados.length === 0 ||  !atendimentoAtual.id) {
+        if (!cliente || !barbeiro || servicosSelecionados.length === 0 && produtosSelecionados.length === 0 ||  !atendimentoAtual.id) {
             return;
         }
+        const updatedAtendimento = {
+            id: atendimentoAtual.id,
+            cliente: { id: Number(cliente) },
+            barbeiro: { id: Number(barbeiro) },
+            servicos: servicosSelecionados.map(id => ({ id })),
+            produtos: produtosSelecionados.map((produtoSelecionado) => ({
+                id: produtoSelecionado.id,
+                quantidade: produtoSelecionado.quantidade,
+            })),
+            data,
+            hora,
+            pagamento,
+          };
         axios
-            .put(`http://localhost:8080/atualizarAtendimentoId/${atendimentoAtual.id}`, atendimentos)
+            .put(`http://localhost:8080/atualizarAtendimentoId/${atendimentoAtual.id}`, updatedAtendimento)
             .then((response) => {
                 console.log(response.data);
 
@@ -297,6 +269,7 @@ function NovoAtendimento() {
                     .then((retorno_convertido) => {
                         setAtendimentos(retorno_convertido);
                         limparFormulario();
+                        setModoEdicao(false)
                     })
                     .catch((error) => {
                         console.error('Erro ao buscar lista de atendimentos:', error);
