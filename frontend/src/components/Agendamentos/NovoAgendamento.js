@@ -118,6 +118,7 @@ function NovoAgendamento() {
     e.preventDefault();
 
     if (!cliente || !barbeiro || servicosSelecionados.length === 0) {
+      alert("Por favor, preencher os campos obrigatórios.")
       return; 
     }
 
@@ -140,6 +141,7 @@ function NovoAgendamento() {
           .then((retorno_convertido) => {
             setAgendamentos(retorno_convertido);
             limparFormulario();
+            alert("Agendamento Realizado!")
           })
           .catch((error) => {
             console.error(error);
@@ -151,9 +153,10 @@ function NovoAgendamento() {
   };
 
   const handleDeletarAgendamento = () => {
-    if (!agendamentoAtual.id) {
-      return;
-    }
+    const confirmacao = window.confirm("Tem certeza que deseja remover este agendamento?")
+    if (!confirmacao) {
+        return;
+        }
     
     axios
       .delete(`http://localhost:8080/deletarAgendamentoId/${agendamentoAtual.id}`)
@@ -165,6 +168,34 @@ function NovoAgendamento() {
             setAgendamentos(retorno_convertido);
             limparFormulario();
             setModoEdicao(true);
+            alert("Agendamento removido com sucesso!")
+          })
+          .catch((error) => {
+            console.error('Erro ao buscar lista de agendamentos:', error);
+          });
+      })
+      .catch((error) => {
+        console.error('Erro ao excluir agendamento:', error);
+      });
+  };
+
+  const concluiAgendamento = () => {
+    const confirmacao = window.confirm("Tem certeza que deseja marcar como concluído este agendamento?")
+    if (!confirmacao) {
+        return;
+        }
+    
+    axios
+      .delete(`http://localhost:8080/deletarAgendamentoId/${agendamentoAtual.id}`)
+      .then((response) => {
+        console.log(response.data);
+        fetch('http://localhost:8080/listarAgendamentos')
+          .then((retorno) => retorno.json())
+          .then((retorno_convertido) => {
+            setAgendamentos(retorno_convertido);
+            limparFormulario();
+            setModoEdicao(true);
+            alert("Agendamento concluído!")
           })
           .catch((error) => {
             console.error('Erro ao buscar lista de agendamentos:', error);
@@ -202,6 +233,7 @@ fetch('http://localhost:8080/listarAgendamentos')
         setAgendamentos(retorno_convertido);
         limparFormulario();
         setModoEdicao(false);
+        alert("Agendamento alterado com sucesso!");
       })
       .catch((error) => {
         console.error('Erro ao buscar lista de agendamentos:', error);

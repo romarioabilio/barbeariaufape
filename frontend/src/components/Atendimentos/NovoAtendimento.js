@@ -181,6 +181,7 @@ function NovoAtendimento() {
         e.preventDefault();
 
         if (!cliente || !barbeiro || servicosSelecionados.length === 0 && produtosSelecionados.length === 0) {
+            alert("Por favor, preencher os campos obrigatórios.")
             return;
         }
 
@@ -198,7 +199,6 @@ function NovoAtendimento() {
         };
 
         console.log(newAtendimento, cliente, barbeiro);
-
         axios.post('http://localhost:8080/novoAtendimento', newAtendimento)
             .then(response => {
                 console.log(response.data);
@@ -206,6 +206,7 @@ function NovoAtendimento() {
                     .then((retorno) => retorno.json())
                     .then((retorno_convertido) => {
                         setAtendimentos(retorno_convertido);
+                        alert("Atendimento Realizado!")
                         limparFormulario();
                     })
                     .catch((error) => {
@@ -218,7 +219,8 @@ function NovoAtendimento() {
     };
 
     const handleDeletarAtendimento = () => {
-        if (!atendimentoAtual.id) {
+        const confirmacao = window.confirm("Tem certeza que deseja remover este atendimento?")
+        if (!confirmacao) {
             return;
         }
 
@@ -232,6 +234,34 @@ function NovoAtendimento() {
                         setAtendimentos(retorno_convertido);
                         limparFormulario();
                         setModoEdicao(true);
+                        alert("Atendimento removido com sucesso!")
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao buscar lista de atendimentos:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Erro ao excluir atendimento:', error);
+            });
+    };
+
+    const concluirAtendimento = () => {
+        const confirmacao = window.confirm("Tem certeza que deseja marcar este atendimento como concluído?")
+        if (!confirmacao) {
+            return;
+        }
+
+        axios
+            .delete(`http://localhost:8080/deletarAtendimentoId/${atendimentoAtual.id}`)
+            .then((response) => {
+                console.log(response.data);
+                fetch('http://localhost:8080/listarAtendimentos')
+                    .then((retorno) => retorno.json())
+                    .then((retorno_convertido) => {
+                        setAtendimentos(retorno_convertido);
+                        limparFormulario();
+                        setModoEdicao(true);
+                        alert("Atendimento concluído!")
                     })
                     .catch((error) => {
                         console.error('Erro ao buscar lista de atendimentos:', error);
@@ -348,7 +378,7 @@ function NovoAtendimento() {
                 </div>
                 {produtosSelecionados.map((produtoSelecionado) => (
                     <div key={produtoSelecionado.id} className="column">
-                        <h3>Quantidade de {produtos.find(p=>p.id == produtoSelecionado.id).nome}</h3>
+                        <h3>Quantidade de {produtos.find(p=>p.id === produtoSelecionado.id).nome}</h3>
                         <input
                             type="number"
                             placeholder="Quantidade"
@@ -393,7 +423,7 @@ function NovoAtendimento() {
                             <input type="button" value='Alterar' className='btn btn-warning' onClick={handleAtualizarAtendimento} />
                             <input type="button" value="Remover" className='btn btn-danger' onClick={handleDeletarAtendimento} />
                             <input type="button" value="Cancelar" className='btn btn-secondary' onClick={cancelar} />
-                            <input type="button" value="Concluído" className='btn btn-primary' onClick={handleDeletarAtendimento} />
+                            <input type="button" value="Concluído" className='btn btn-success' onClick={concluirAtendimento} />
                         </div>
                 }
             </form>
